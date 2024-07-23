@@ -13,6 +13,12 @@ describe('Deve renderizar a Home corretamente', () => {
             expect(menu).toBeInTheDocument();
         });
 
+        it('Deve renderizar o botão de abrir o menu no Mobile', () => {
+            const btn = screen.getByTestId('btn-open-menu');
+
+            expect(btn).toBeInTheDocument();
+        });
+
         it('Deve renderizar a logo', () => {
             const logo = screen.getByTestId('logo');
 
