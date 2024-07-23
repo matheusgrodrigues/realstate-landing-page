@@ -18,7 +18,7 @@ interface ListProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLULi
 }
 
 const List: React.FC<ListProps> = ({ className, items, ...props }) => (
-    <ul data-testid="list" className={`gap-pequeno flex ${className}`} {...props}>
+    <ul data-testid="list" className={`gap-pequeno flex-col flex ${className}`} {...props}>
         {items.map((item) => (
             <ListItem label={item} key={item} />
         ))}
@@ -60,6 +60,7 @@ const MenuPrincipal: React.FC = () => {
             </div>
 
             <div>
+                {/* TODO: animar a transição quando clica no botão de abrir o menu no mobile, entre as bars e o x */}
                 <button
                     data-testid="btn-open-menu"
                     className="outline-none w-auto md:hidden"
@@ -68,13 +69,11 @@ const MenuPrincipal: React.FC = () => {
                     {openMenu ? <Icon icon="x-icon" /> : <Icon icon="bars-3" />}
                 </button>
 
+                {/* TODO: corrigir bug no desktop, está executando a animação de slideOut no desktop bugando os itens do menu */}
                 <div
-                    className={`bg-azulForte ${openMenu ? 'absolute md:relative top-[70px] md:top-auto block left-1/4 md:left-auto w-3/4 md:w-auto p-medio' : 'hidden md:block'}`}
+                    className={`bg-azulForte absolute md:relative top-[70px] md:top-auto right-[0] md:right-auto block w-3/4 md:w-auto p-medio ${openMenu ? 'animate-slideIn' : 'animate-slideOut md:animate-none'}`}
                 >
-                    <List
-                        className={`${openMenu ? 'flex-col md:flex-row' : ''}`}
-                        items={['Inicio', 'Fotos', 'Descrição']}
-                    />
+                    <List className={`md:flex-row`} items={['Inicio', 'Fotos', 'Descrição']} />
                 </div>
             </div>
         </nav>

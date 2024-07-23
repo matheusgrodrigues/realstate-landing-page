@@ -24,6 +24,7 @@ const config: Config = {
             normal: '1rem',
             medio: '1.12rem',
         },
+
         spacing: {
             extraMedio: '2rem',
             pequeno: '0.75rem',
@@ -42,6 +43,30 @@ const config: Config = {
             cinza: '#a0a0a0',
             azul: '#284eaf',
             bege: '#818386',
+        },
+
+        animation: {
+            slideIn: 'slideIn 0.3s linear forwards',
+            slideOut: 'slideOut 0.3s linear forwards',
+        },
+        keyframes: {
+            slideIn: {
+                '0%': {
+                    transform: 'translateX(100%)',
+                },
+                '100%': {
+                    transform: 'translateX(0%)',
+                },
+            },
+
+            slideOut: {
+                '0%': {
+                    transform: 'translateX(0%)',
+                },
+                '100%': {
+                    transform: 'translateX(100%)',
+                },
+            },
         },
     },
     plugins: [],
