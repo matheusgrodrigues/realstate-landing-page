@@ -74,9 +74,33 @@ const menu_links = [
 const MenuPrincipal: React.FC = () => {
     const rootMenuListRef = useRef<HTMLDivElement>(null);
     const menuButtonRef = useRef<HTMLButtonElement>(null);
-    const hasOpenMenu = useRef(false);
     const rootMenu = useRef<HTMLElement>(null);
     const logoRef = useRef<SVGSVGElement>(null);
+
+    const hasOpenMenu = useRef(false);
+
+    const toggleColor = useCallback(() => {
+        const menuList = rootMenuListRef.current?.querySelectorAll('ul li');
+
+        console.log(window.scrollY);
+        if (window.scrollY >= 70) {
+            rootMenuListRef.current?.classList.add('bg-white');
+            menuButtonRef.current?.querySelector('svg')?.classList.add('text-preto');
+            rootMenu.current?.classList.remove('bg-azulForte');
+            rootMenu.current?.classList.add('bg-white');
+            logoRef.current?.classList.add('text-preto');
+
+            menuList && menuList.forEach((item) => item.classList.add('text-preto'));
+        } else {
+            rootMenuListRef.current?.classList.add('bg-azulForte');
+            menuButtonRef.current?.querySelector('svg')?.classList.remove('text-preto');
+            rootMenu.current?.classList.remove('bg-white');
+            rootMenu.current?.classList.add('bg-azulForte');
+            logoRef.current?.classList.remove('text-preto');
+
+            menuList && menuList.forEach((item) => item.classList.remove('text-preto'));
+        }
+    }, []);
 
     const MenuButton: React.FC = () => {
         const [openMenu, setOpenMenu] = useState(false);
@@ -87,13 +111,10 @@ const MenuPrincipal: React.FC = () => {
             hasOpenMenu.current = !hasOpenMenu.current;
 
             if (hasOpenMenu.current) {
-                menuButtonRef.current?.querySelector('svg')?.classList.add('text-preto');
                 rootMenuListRef.current?.classList.remove('hidden');
                 rootMenuListRef.current?.classList.remove('animate-slideOut');
                 rootMenuListRef.current?.classList.add('animate-slideIn');
             } else {
-                menuButtonRef.current?.querySelector('svg')?.classList.add('text-preto');
-
                 rootMenuListRef.current?.classList.remove('animate-slideIn');
                 rootMenuListRef.current?.classList.add('animate-slideOut');
                 rootMenuListRef.current?.classList.add('hidden');
@@ -103,7 +124,7 @@ const MenuPrincipal: React.FC = () => {
         return (
             <button
                 data-testid="btn-open-menu"
-                className="outline-none w-auto md:hidden"
+                className="outline-none w-auto md:hidden text-preto"
                 onClick={toggleMenu}
                 ref={menuButtonRef}
             >
@@ -113,26 +134,6 @@ const MenuPrincipal: React.FC = () => {
     };
 
     useEffect(() => {
-        const menuList = rootMenuListRef.current?.querySelectorAll('ul li');
-
-        const toggleColor = () => {
-            if (window.scrollY >= 70) {
-                menuButtonRef.current?.querySelector('svg')?.classList.add('text-preto');
-                rootMenu.current?.classList.remove('bg-azulForte');
-                rootMenu.current?.classList.add('bg-white');
-                logoRef.current?.classList.add('text-preto');
-
-                menuList && menuList.forEach((item) => item.classList.add('text-preto'));
-            } else {
-                menuButtonRef.current?.querySelector('svg')?.classList.remove('text-preto');
-                rootMenu.current?.classList.remove('bg-white');
-                rootMenu.current?.classList.add('bg-azulForte');
-                logoRef.current?.classList.remove('text-preto');
-
-                menuList && menuList.forEach((item) => item.classList.remove('text-preto'));
-            }
-        };
-
         toggleColor();
 
         const debouncedToggleColor = debounce(toggleColor, 30);
@@ -140,7 +141,7 @@ const MenuPrincipal: React.FC = () => {
         window.addEventListener('scroll', debouncedToggleColor);
 
         return () => window.removeEventListener('scroll', debouncedToggleColor);
-    }, []);
+    }, [toggleColor]);
 
     return (
         <nav
