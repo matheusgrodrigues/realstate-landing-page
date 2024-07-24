@@ -1,7 +1,7 @@
 'use client';
 
 import { default as NextLink } from 'next/link';
-import React, { ButtonHTMLAttributes, forwardRef, useCallback, useMemo, useRef, useState } from 'react';
+import React, { ButtonHTMLAttributes, forwardRef, useCallback, useState, useRef, useEffect } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 interface ListItemProps extends React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
@@ -64,6 +64,7 @@ const Link: typeof NextLink = forwardRef(({ href, ...props }, ref) => <NextLink 
 
 Link.displayName = 'Navigate';
 
+// TODO: criar um arquivo routes para centralizar todas as rotas do sistema.
 const menu_links = [
     {
         displayName: 'Inicio',
@@ -82,6 +83,7 @@ const menu_links = [
 const MenuPrincipal: React.FC = () => {
     const rootMenuListRef = useRef<HTMLDivElement>(null);
     const hasOpenMenu = useRef(false);
+    const rootMenu = useRef<HTMLElement>(null);
 
     const toggleMenu = useCallback(() => {
         hasOpenMenu.current = !hasOpenMenu.current;
@@ -115,10 +117,31 @@ const MenuPrincipal: React.FC = () => {
         );
     };
 
+    useEffect(() => {
+        const toggleColor = () => {
+            if (typeof window !== undefined) {
+                window.addEventListener('scroll', () => {
+                    console.log(window.screenY);
+                    if (window.screenY >= 70) {
+                        console.log('maior');
+                        rootMenu.current?.classList.add('bg-azulForte');
+                    } else {
+                        console.log('menor');
+
+                        rootMenu.current?.classList.add('bg-white');
+                    }
+                });
+            }
+        };
+
+        toggleColor();
+    }, []);
+
     return (
         <nav
             data-testid="menu-principal"
-            className="bg-azulForte h-[70px] w-full justify-between items-center flex px-medio"
+            className="bg-azulForte h-[700px] w-full justify-between items-center flex px-medio"
+            ref={rootMenu}
         >
             <div>
                 <Logo />
