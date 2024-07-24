@@ -1,7 +1,7 @@
 'use client';
 
 import { default as NextLink } from 'next/link';
-import React, { forwardRef, useCallback, useState, useRef, useEffect } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import debounce from './lib/util/debounce';
@@ -71,69 +71,25 @@ const menu_links = [
     },
 ];
 
+type MenuBgColor = 'bg-azulForte' | 'bg-white';
+
 const MenuPrincipal: React.FC = () => {
-    const rootMenuListRef = useRef<HTMLDivElement>(null);
-    const menuButtonRef = useRef<HTMLButtonElement>(null);
-    const rootMenu = useRef<HTMLElement>(null);
-    const logoRef = useRef<SVGSVGElement>(null);
+    const [menuBgColor, setMenuBgColor] = useState<MenuBgColor>('bg-azulForte');
+    const [menuIsOpen, setMenuIsOpen] = useState(false);
 
-    const hasOpenMenu = useRef(false);
+    const menuTextClassNames = `${menuBgColor === 'bg-azulForte' ? 'text-white' : 'text-pretoForte'}`;
 
-    const toggleColor = useCallback(() => {
-        const menuList = rootMenuListRef.current?.querySelectorAll('ul li');
-
-        console.log(window.scrollY);
-        if (window.scrollY >= 70) {
-            rootMenuListRef.current?.classList.add('bg-white');
-            menuButtonRef.current?.querySelector('svg')?.classList.add('text-preto');
-            rootMenu.current?.classList.remove('bg-azulForte');
-            rootMenu.current?.classList.add('bg-white');
-            logoRef.current?.classList.add('text-preto');
-
-            menuList && menuList.forEach((item) => item.classList.add('text-preto'));
-        } else {
-            rootMenuListRef.current?.classList.add('bg-azulForte');
-            menuButtonRef.current?.querySelector('svg')?.classList.remove('text-preto');
-            rootMenu.current?.classList.remove('bg-white');
-            rootMenu.current?.classList.add('bg-azulForte');
-            logoRef.current?.classList.remove('text-preto');
-
-            menuList && menuList.forEach((item) => item.classList.remove('text-preto'));
-        }
-    }, []);
-
-    const MenuButton: React.FC = () => {
-        const [openMenu, setOpenMenu] = useState(false);
-
-        const toggleMenu = useCallback(() => {
-            setOpenMenu(!openMenu);
-
-            hasOpenMenu.current = !hasOpenMenu.current;
-
-            if (hasOpenMenu.current) {
-                rootMenuListRef.current?.classList.remove('hidden');
-                rootMenuListRef.current?.classList.remove('animate-slideOut');
-                rootMenuListRef.current?.classList.add('animate-slideIn');
-            } else {
-                rootMenuListRef.current?.classList.remove('animate-slideIn');
-                rootMenuListRef.current?.classList.add('animate-slideOut');
-                rootMenuListRef.current?.classList.add('hidden');
-            }
-        }, [openMenu]);
-
-        return (
-            <button
-                data-testid="btn-open-menu"
-                className="outline-none w-auto md:hidden text-preto"
-                onClick={toggleMenu}
-                ref={menuButtonRef}
-            >
-                {openMenu ? <Icon icon="x-icon" /> : <Icon icon="bars-3" />}
-            </button>
-        );
-    };
+    console.log('renderouzou');
 
     useEffect(() => {
+        const toggleColor = () => {
+            if (window.scrollY >= 70) {
+                setMenuBgColor('bg-white');
+            } else {
+                setMenuBgColor('bg-azulForte');
+            }
+        };
+
         toggleColor();
 
         const debouncedToggleColor = debounce(toggleColor, 30);
@@ -141,33 +97,41 @@ const MenuPrincipal: React.FC = () => {
         window.addEventListener('scroll', debouncedToggleColor);
 
         return () => window.removeEventListener('scroll', debouncedToggleColor);
-    }, [toggleColor]);
+    }, []);
 
     return (
         <nav
             data-testid="menu-principal"
-            className="bg-azulForte fixed top-[0] h-[70px] w-full justify-between items-center flex px-medio ease-linear duration-200"
-            ref={rootMenu}
+            className={`${menuBgColor} fixed top-[0] h-[70px] w-full justify-between items-center flex px-medio ease-linear duration-200`}
         >
             <div>
                 <Icon
                     data-testid="logo"
-                    className="text-grande font-semiBold w-[32px]"
+                    className={`text-grande font-semiBold w-[32px] ${menuTextClassNames}`}
                     icon="building-library"
-                    ref={logoRef}
                 />
             </div>
 
             <div>
-                <MenuButton />
+                <button
+                    data-testid="btn-open-menu"
+                    className={`outline-none w-auto md:hidden`}
+                    onClick={() => setMenuIsOpen(!menuIsOpen)}
+                >
+                    {menuIsOpen ? (
+                        <Icon className={menuTextClassNames} icon="x-icon" />
+                    ) : (
+                        <Icon className={menuTextClassNames} icon="bars-3" />
+                    )}
+                </button>
 
+                {/* TODO: Corrigir para que o animation-slideOut não execute ao entrar pela primeira vez na pagina. -> problema no hidden */}
                 <div
-                    className={`bg-azulForte md:bg-transparent absolute md:relative top-[70px] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio hidden md:block md:animate-none`}
-                    ref={rootMenuListRef}
+                    className={`${menuBgColor} md:bg-transparent absolute md:relative top-[70px] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio md:block md:animate-none ${menuIsOpen ? 'block animate-slideIn' : 'animate-slideOut'}`}
                 >
                     <List className={`md:flex-row`}>
                         {menu_links.map(({ displayName, path }) => (
-                            <ListItem key={displayName}>
+                            <ListItem className={menuTextClassNames} key={displayName}>
                                 <Link href={{ pathname: path }}>{displayName}</Link>
                             </ListItem>
                         ))}
