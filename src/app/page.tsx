@@ -1,27 +1,26 @@
 'use client';
 
-import React, { ButtonHTMLAttributes, forwardRef, useState } from 'react';
-import { Bars3Icon, BuildingLibraryIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { default as NextLink } from 'next/link';
+import React, { ButtonHTMLAttributes, forwardRef, useCallback, useMemo, useRef, useState } from 'react';
+import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 interface ListItemProps extends React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
-    label: string;
+    children: React.ReactNode;
 }
 
-const ListItem: React.FC<ListItemProps> = ({ className, label, ...props }) => (
+const ListItem: React.FC<ListItemProps> = ({ className, children, ...props }) => (
     <li className={`text-white ${className}`} {...props}>
-        {label}
+        {children}
     </li>
 );
 
 interface ListProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
-    items: string[];
+    children: React.ReactNode;
 }
 
-const List: React.FC<ListProps> = ({ className, items, ...props }) => (
+const List: React.FC<ListProps> = ({ className, children, ...props }) => (
     <ul data-testid="list" className={`gap-pequeno flex-col flex ${className}`} {...props}>
-        {items.map((item) => (
-            <ListItem label={item} key={item} />
-        ))}
+        {children}
     </ul>
 );
 
@@ -51,25 +50,70 @@ interface ButtonProps extends React.DetailedHTMLProps<ButtonHTMLAttributes<HTMLB
     variant: 'hamburger';
 }
 
-const Button: React.FC<ButtonProps> = ({ children, variant, onClick, ...props }) => {
-    return (
-        <>
-            {variant === 'hamburger' && (
-                <button
-                    data-testid="btn-open-menu"
-                    className="outline-none w-auto md:hidden"
-                    onClick={onClick}
-                    {...props}
-                >
-                    {children}
-                </button>
-            )}
-        </>
-    );
-};
+const Button: React.FC<ButtonProps> = ({ children, variant, onClick, ...props }) => (
+    <>
+        {variant === 'hamburger' && (
+            <button data-testid="btn-open-menu" className="outline-none w-auto md:hidden" onClick={onClick} {...props}>
+                {children}
+            </button>
+        )}
+    </>
+);
+
+const Link: typeof NextLink = forwardRef(({ href, ...props }, ref) => <NextLink href={href} {...props} />);
+
+Link.displayName = 'Navigate';
+
+const menu_links = [
+    {
+        displayName: 'Inicio',
+        path: '/',
+    },
+    {
+        displayName: 'Fotos',
+        path: '/',
+    },
+    {
+        displayName: 'Descrição',
+        path: '/',
+    },
+];
 
 const MenuPrincipal: React.FC = () => {
-    const [openMenu, setOpenMenu] = useState(false);
+    const rootMenuListRef = useRef<HTMLDivElement>(null);
+    const hasOpenMenu = useRef(false);
+
+    const toggleMenu = useCallback(() => {
+        hasOpenMenu.current = !hasOpenMenu.current;
+
+        if (hasOpenMenu.current) {
+            rootMenuListRef.current?.classList.remove('hidden');
+            rootMenuListRef.current?.classList.remove('animate-slideOut');
+            rootMenuListRef.current?.classList.add('animate-slideIn');
+        } else {
+            rootMenuListRef.current?.classList.remove('animate-slideIn');
+            rootMenuListRef.current?.classList.add('animate-slideOut');
+            rootMenuListRef.current?.classList.add('hidden');
+        }
+    }, []);
+
+    const MenuButton: React.FC = () => {
+        const [openMenu, setOpenMenu] = useState(false);
+
+        return (
+            <Button
+                data-testid="btn-open-menu"
+                className="outline-none w-auto md:hidden"
+                variant="hamburger"
+                onClick={() => {
+                    setOpenMenu(!openMenu);
+                    toggleMenu();
+                }}
+            >
+                {openMenu ? <Icon icon="x-icon" /> : <Icon icon="bars-3" />}
+            </Button>
+        );
+    };
 
     return (
         <nav
@@ -81,20 +125,19 @@ const MenuPrincipal: React.FC = () => {
             </div>
 
             <div>
-                {/* TODO: animar a transição quando clica no botão de abrir o menu no mobile, entre as bars e o x */}
-                <Button
-                    data-testid="btn-open-menu"
-                    className="outline-none w-auto md:hidden"
-                    variant="hamburger"
-                    onClick={() => setOpenMenu(!openMenu)}
-                >
-                    {openMenu ? <Icon icon="x-icon" /> : <Icon icon="bars-3" />}
-                </Button>
+                <MenuButton />
 
                 <div
-                    className={`bg-azulForte absolute md:relative top-[70px] md:top-auto right-[0] md:right-auto block w-3/4 md:w-auto p-medio ${openMenu ? 'animate-slideIn' : 'animate-slideOut md:animate-none'}`}
+                    className={`bg-azulForte absolute md:relative top-[70px] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio hidden md:block md:animate-none`}
+                    ref={rootMenuListRef}
                 >
-                    <List className={`md:flex-row`} items={['Inicio', 'Fotos', 'Descrição']} />
+                    <List className={`md:flex-row`}>
+                        {menu_links.map(({ displayName, path }) => (
+                            <ListItem key={displayName}>
+                                <Link href={{ pathname: path }}>{displayName}</Link>
+                            </ListItem>
+                        ))}
+                    </List>
                 </div>
             </div>
         </nav>
