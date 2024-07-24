@@ -1,6 +1,6 @@
 'use client';
 
-import React, { forwardRef, useState } from 'react';
+import React, { ButtonHTMLAttributes, forwardRef, useState } from 'react';
 import { Bars3Icon, BuildingLibraryIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 interface ListItemProps extends React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
@@ -35,17 +35,38 @@ const Icon: React.ForwardRefExoticComponent<
         title?: string;
         icon: 'bars-3' | 'x-icon';
     } & React.RefAttributes<SVGSVGElement>
-> = forwardRef(({ className, icon, ...props }, ref) =>
-    icon === 'x-icon' ? (
-        <XMarkIcon className={`text-white w-[32px] ${className}`} ref={ref} {...props} />
-    ) : icon === 'bars-3' ? (
-        <Bars3Icon className={`text-white w-[32px] ${className}`} ref={ref} {...props} />
-    ) : (
-        ''
-    )
-);
+> = forwardRef(({ className, icon, ...props }, ref) => {
+    return (
+        <>
+            {icon === 'x-icon' && <XMarkIcon className={`text-white w-[32px] ${className}`} ref={ref} {...props} />}
+            {icon === 'bars-3' && <Bars3Icon className={`text-white w-[32px] ${className}`} ref={ref} {...props} />}
+        </>
+    );
+});
 
 Icon.displayName = 'Icon';
+
+interface ButtonProps extends React.DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+    children: React.ReactNode;
+    variant: 'hamburger';
+}
+
+const Button: React.FC<ButtonProps> = ({ children, variant, onClick, ...props }) => {
+    return (
+        <>
+            {variant === 'hamburger' && (
+                <button
+                    data-testid="btn-open-menu"
+                    className="outline-none w-auto md:hidden"
+                    onClick={onClick}
+                    {...props}
+                >
+                    {children}
+                </button>
+            )}
+        </>
+    );
+};
 
 const MenuPrincipal: React.FC = () => {
     const [openMenu, setOpenMenu] = useState(false);
@@ -61,15 +82,15 @@ const MenuPrincipal: React.FC = () => {
 
             <div>
                 {/* TODO: animar a transição quando clica no botão de abrir o menu no mobile, entre as bars e o x */}
-                <button
+                <Button
                     data-testid="btn-open-menu"
                     className="outline-none w-auto md:hidden"
+                    variant="hamburger"
                     onClick={() => setOpenMenu(!openMenu)}
                 >
                     {openMenu ? <Icon icon="x-icon" /> : <Icon icon="bars-3" />}
-                </button>
+                </Button>
 
-                {/* TODO: corrigir bug no desktop, está executando a animação de slideOut no desktop bugando os itens do menu */}
                 <div
                     className={`bg-azulForte absolute md:relative top-[70px] md:top-auto right-[0] md:right-auto block w-3/4 md:w-auto p-medio ${openMenu ? 'animate-slideIn' : 'animate-slideOut md:animate-none'}`}
                 >
