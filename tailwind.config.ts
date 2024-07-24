@@ -32,6 +32,7 @@ const config: Config = {
             medio: '1.25rem',
         },
         colors: {
+            transparent: 'transparent',
             pretoForte: '#151a21',
             azulForte2: '#284eaf',
             azulForte: '#0c1e4b',
