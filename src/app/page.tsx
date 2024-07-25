@@ -1,6 +1,6 @@
 'use client';
 
-import { default as NextLink } from 'next/link';
+import Link from 'next/link';
 import React, { forwardRef, useCallback, useEffect, useState, useRef, HTMLAttributes } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
@@ -27,9 +27,39 @@ const Icon: React.ForwardRefExoticComponent<
 
 Icon.displayName = 'Icon';
 
-const Link: typeof NextLink = forwardRef(({ href, ...props }, ref) => <NextLink href={href} {...props} />);
+interface ButtonProps
+    extends Omit<React.DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'className'> {
+    children: React.ReactNode;
+    config: {
+        customClassName?: string | undefined;
+        variant?: 'default';
+        active?: boolean;
+        size?: 'extraMedio';
+    };
+}
 
-Link.displayName = 'Link';
+const Button: React.FC<ButtonProps> = ({ children, config, ...props }) => {
+    return (
+        <>
+            {config.variant === 'default' ? (
+                <button
+                    className={`${config.active ? 'bg-azulForte text-white' : 'text-cinza hover:text-white bg-white2 hover:bg-cinza ease-in-out duration-200'} font-bold px-extraMedio h-[3rem] rounded-md`}
+                    {...props}
+                >
+                    {children}
+                </button>
+            ) : (
+                <button
+                    data-testid="btn-open-menu"
+                    className={`outline-none size-${config.size} ${config.customClassName}`}
+                    {...props}
+                >
+                    {children}
+                </button>
+            )}
+        </>
+    );
+};
 
 const menu_links = [
     {
@@ -57,6 +87,14 @@ const MenuPrincipal: React.FC = () => {
     const menuPrincipalRef = useRef<HTMLElement>(null);
 
     const menuTextClassNames = `${menuBgColor === 'bg-azulForte' ? 'text-white' : 'text-pretoForte'}`;
+
+    const toggleMenu = useCallback(() => {
+        setMenuIsOpen(!menuIsOpen);
+
+        if (!menuHasOpened) {
+            setMenuHasOpened(true);
+        }
+    }, [menuHasOpened, menuIsOpen]);
 
     useEffect(() => {
         let resizeTimer: NodeJS.Timeout;
@@ -115,23 +153,20 @@ const MenuPrincipal: React.FC = () => {
                 </div>
 
                 <div className="items-center flex">
-                    <button
-                        data-testid="btn-open-menu"
-                        className={`outline-none size-extraMedio md:hidden`}
-                        onClick={() => {
-                            setMenuIsOpen(!menuIsOpen);
-
-                            if (!menuHasOpened) {
-                                setMenuHasOpened(true);
-                            }
+                    <Button
+                        config={{
+                            customClassName: 'md:hidden',
+                            size: 'extraMedio',
                         }}
+                        data-testid="btn-open-menu"
+                        onClick={toggleMenu}
                     >
                         {menuIsOpen ? (
                             <Icon className={menuTextClassNames} icon="x-icon" />
                         ) : (
                             <Icon className={menuTextClassNames} icon="bars-3" />
                         )}
-                    </button>
+                    </Button>
 
                     <div
                         className={`${menuBgColor} md:bg-transparent absolute md:relative top-[4rem] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio md:block md:animate-none 
@@ -150,21 +185,6 @@ const MenuPrincipal: React.FC = () => {
         </nav>
     );
 };
-
-interface ButtonProps
-    extends Omit<React.DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'className'> {
-    children: React.ReactNode;
-    active?: boolean;
-}
-
-const Button: React.FC<ButtonProps> = ({ children, active, ...props }) => (
-    <button
-        className={`${active ? 'bg-azulForte text-white' : 'text-cinza hover:text-white bg-white2 hover:bg-cinza ease-in-out duration-200'} font-bold px-extraMedio h-[3rem] rounded-md`}
-        {...props}
-    >
-        {children}
-    </button>
-);
 
 const Header: React.FC = () => {
     const [showComponent, setShowComponent] = useState({
@@ -237,13 +257,25 @@ const Header: React.FC = () => {
             </div>
 
             <div className="container mx-auto p-medio flex gap-pequeno">
-                <Button data-testid="btn-open-fotos" active={showComponent.fotos} onClick={handleShowFotos}>
+                <Button
+                    data-testid="btn-open-fotos"
+                    config={{ variant: 'default', active: showComponent.fotos }}
+                    onClick={handleShowFotos}
+                >
                     Fotos
                 </Button>
-                <Button data-testid="btn-open-video" active={showComponent.video} onClick={handleShowVideo}>
+                <Button
+                    data-testid="btn-open-video"
+                    config={{ variant: 'default', active: showComponent.video }}
+                    onClick={handleShowVideo}
+                >
                     Vídeo
                 </Button>
-                <Button data-testid="btn-open-mapa" active={showComponent.mapa} onClick={handleShowMapa}>
+                <Button
+                    data-testid="btn-open-mapa"
+                    config={{ variant: 'default', active: showComponent.mapa }}
+                    onClick={handleShowMapa}
+                >
                     Mapa
                 </Button>
             </div>
