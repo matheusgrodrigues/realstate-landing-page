@@ -34,7 +34,6 @@ interface ButtonProps
         customClassName?: string | undefined;
         variant?: 'default';
         active?: boolean;
-        size?: 'extraMedio';
     };
 }
 
@@ -49,11 +48,7 @@ const Button: React.FC<ButtonProps> = ({ children, config, ...props }) => {
                     {children}
                 </button>
             ) : (
-                <button
-                    data-testid="btn-open-menu"
-                    className={`outline-none size-${config.size} ${config.customClassName}`}
-                    {...props}
-                >
+                <button className={config.customClassName} {...props}>
                     {children}
                 </button>
             )}
@@ -155,8 +150,7 @@ const MenuPrincipal: React.FC = () => {
                 <div className="items-center flex">
                     <Button
                         config={{
-                            customClassName: 'md:hidden',
-                            size: 'extraMedio',
+                            customClassName: 'outline-none size-extraMedio md:hidden',
                         }}
                         data-testid="btn-open-menu"
                         onClick={toggleMenu}
