@@ -1,3 +1,3 @@
-# Realstate Landing Page
+# Realstate Landing Page - Em andamento
 
 LandingPage utilizando NextJS + Tailwind.
