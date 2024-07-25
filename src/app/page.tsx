@@ -1,7 +1,7 @@
 'use client';
 
 import { default as NextLink } from 'next/link';
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState, useRef, HTMLAttributes } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import debounce from './lib/util/debounce';
@@ -102,58 +102,154 @@ const MenuPrincipal: React.FC = () => {
     return (
         <nav
             data-testid="menu-principal"
-            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full justify-between items-center flex px-medio ease-linear duration-200`}
+            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full px-medio ease-linear duration-200 flex items-center`}
             ref={menuPrincipalRef}
         >
-            <div>
-                <Icon
-                    data-testid="logo"
-                    className={`text-grande font-semiBold w-[2rem] ${menuTextClassNames}`}
-                    icon="building-library"
-                />
-            </div>
+            <div className="w-full justify-between items-center flex container mx-auto">
+                <div>
+                    <Icon
+                        data-testid="logo"
+                        className={`text-grande font-semiBold w-[2rem] ${menuTextClassNames}`}
+                        icon="building-library"
+                    />
+                </div>
 
-            <div className="items-center flex">
-                <button
-                    data-testid="btn-open-menu"
-                    className={`outline-none size-extraMedio md:hidden`}
-                    onClick={() => {
-                        setMenuIsOpen(!menuIsOpen);
+                <div className="items-center flex">
+                    <button
+                        data-testid="btn-open-menu"
+                        className={`outline-none size-extraMedio md:hidden`}
+                        onClick={() => {
+                            setMenuIsOpen(!menuIsOpen);
 
-                        if (!menuHasOpened) {
-                            setMenuHasOpened(true);
-                        }
-                    }}
-                >
-                    {menuIsOpen ? (
-                        <Icon className={menuTextClassNames} icon="x-icon" />
-                    ) : (
-                        <Icon className={menuTextClassNames} icon="bars-3" />
-                    )}
-                </button>
+                            if (!menuHasOpened) {
+                                setMenuHasOpened(true);
+                            }
+                        }}
+                    >
+                        {menuIsOpen ? (
+                            <Icon className={menuTextClassNames} icon="x-icon" />
+                        ) : (
+                            <Icon className={menuTextClassNames} icon="bars-3" />
+                        )}
+                    </button>
 
-                <div
-                    className={`${menuBgColor} md:bg-transparent absolute md:relative top-[4rem] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio md:block md:animate-none 
+                    <div
+                        className={`${menuBgColor} md:bg-transparent absolute md:relative top-[4rem] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio md:block md:animate-none 
                     ${menuIsOpen ? 'block animate-slideIn' : menuHasOpened && !isResizing ? 'animate-slideOut' : 'hidden'}`}
-                >
-                    <ul data-testid="list" className={`gap-pequeno flex-col flex md:flex-row`}>
-                        {menu_links.map(({ displayName, path }) => (
-                            <li className={menuTextClassNames} key={displayName}>
-                                <Link href={{ pathname: path }}>{displayName}</Link>
-                            </li>
-                        ))}
-                    </ul>
+                    >
+                        <ul data-testid="list" className={`gap-pequeno flex-col flex md:flex-row`}>
+                            {menu_links.map(({ displayName, path }) => (
+                                <li className={menuTextClassNames} key={displayName}>
+                                    <Link href={{ pathname: path }}>{displayName}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
     );
 };
 
-const Header: React.FC = () => (
-    <header className="relative">
-        <MenuPrincipal />
-    </header>
+interface ButtonProps
+    extends Omit<React.DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'className'> {
+    children: React.ReactNode;
+    active?: boolean;
+}
+
+const Button: React.FC<ButtonProps> = ({ children, active, ...props }) => (
+    <button
+        className={`${active ? 'bg-azulForte text-white' : 'text-cinza hover:text-white bg-white2 hover:bg-cinza ease-in-out duration-200'} font-bold px-extraMedio h-[3rem] rounded-md`}
+        {...props}
+    >
+        {children}
+    </button>
 );
+
+const Header: React.FC = () => {
+    const [showComponent, setShowComponent] = useState({
+        video: false,
+        fotos: true,
+        mapa: false,
+    });
+
+    const handleShowFotos = useCallback(
+        () =>
+            setShowComponent({
+                video: false,
+                fotos: true,
+                mapa: false,
+            }),
+        []
+    );
+
+    const handleShowVideo = useCallback(
+        () =>
+            setShowComponent({
+                video: true,
+                fotos: false,
+                mapa: false,
+            }),
+        []
+    );
+
+    const handleShowMapa = useCallback(
+        () =>
+            setShowComponent({
+                video: false,
+                fotos: false,
+                mapa: true,
+            }),
+        []
+    );
+
+    return (
+        <header className="relative">
+            <MenuPrincipal />
+
+            <div className="w-full items-center flex mt-[4rem] h-[30rem] border-solid border-2">
+                {showComponent.fotos && (
+                    <div
+                        data-testid="component-fotos"
+                        className="size-full bg-azulForte2 items-center justify-center flex"
+                    >
+                        <div>{'Fotos'}</div>
+                    </div>
+                )}
+
+                {showComponent.video && (
+                    <div
+                        data-testid="component-video"
+                        className="size-full bg-azulForte items-center justify-center flex"
+                    >
+                        {'Vídeo'}
+                    </div>
+                )}
+
+                {showComponent.mapa && (
+                    <div
+                        data-testid="component-mapa"
+                        className="size-full bg-azulFeio items-center justify-center flex"
+                    >
+                        {'Mapa'}
+                    </div>
+                )}
+            </div>
+
+            <div className="container mx-auto p-medio flex gap-pequeno">
+                <Button data-testid="btn-open-fotos" active={showComponent.fotos} onClick={handleShowFotos}>
+                    Fotos
+                </Button>
+                <Button data-testid="btn-open-video" active={showComponent.video} onClick={handleShowVideo}>
+                    Vídeo
+                </Button>
+                <Button data-testid="btn-open-mapa" active={showComponent.mapa} onClick={handleShowMapa}>
+                    Mapa
+                </Button>
+            </div>
+        </header>
+    );
+};
 
 export default function Home() {
     return (
