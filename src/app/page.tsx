@@ -1,7 +1,7 @@
 'use client';
 
 import { default as NextLink } from 'next/link';
-import React, { forwardRef, useCallback, useEffect, useState, useRef } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState, useRef, HTMLAttributes } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import debounce from './lib/util/debounce';
@@ -102,7 +102,7 @@ const MenuPrincipal: React.FC = () => {
     return (
         <nav
             data-testid="menu-principal"
-            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full px-medio ease-linear duration-200`}
+            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full px-medio ease-linear duration-200 flex items-center`}
             ref={menuPrincipalRef}
         >
             <div className="w-full justify-between items-center flex container mx-auto">
@@ -151,13 +151,20 @@ const MenuPrincipal: React.FC = () => {
     );
 };
 
-const fotos = [
-    {
-        legenda: 'Foto1',
-    },
-];
-const video = 'Video';
-const mapa = 'Mapa';
+interface ButtonProps
+    extends Omit<React.DetailedHTMLProps<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement>, 'className'> {
+    children: React.ReactNode;
+    active?: boolean;
+}
+
+const Button: React.FC<ButtonProps> = ({ children, active, ...props }) => (
+    <button
+        className={`${active ? 'bg-azulForte text-white' : 'text-cinza hover:text-white bg-white2 hover:bg-cinza ease-in-out duration-200'} font-bold px-extraMedio h-[3rem] rounded-md`}
+        {...props}
+    >
+        {children}
+    </button>
+);
 
 const Header: React.FC = () => {
     const [showComponent, setShowComponent] = useState({
@@ -166,29 +173,35 @@ const Header: React.FC = () => {
         mapa: false,
     });
 
-    const handleShowFotos = useCallback(() => {
-        setShowComponent({
-            video: false,
-            fotos: true,
-            mapa: false,
-        });
-    }, []);
+    const handleShowFotos = useCallback(
+        () =>
+            setShowComponent({
+                video: false,
+                fotos: true,
+                mapa: false,
+            }),
+        []
+    );
 
-    const handleShowVideo = useCallback(() => {
-        setShowComponent({
-            video: true,
-            fotos: false,
-            mapa: false,
-        });
-    }, []);
+    const handleShowVideo = useCallback(
+        () =>
+            setShowComponent({
+                video: true,
+                fotos: false,
+                mapa: false,
+            }),
+        []
+    );
 
-    const handleShowMapa = useCallback(() => {
-        setShowComponent({
-            video: false,
-            fotos: false,
-            mapa: true,
-        });
-    }, []);
+    const handleShowMapa = useCallback(
+        () =>
+            setShowComponent({
+                video: false,
+                fotos: false,
+                mapa: true,
+            }),
+        []
+    );
 
     return (
         <header className="relative">
@@ -200,7 +213,7 @@ const Header: React.FC = () => {
                         data-testid="component-fotos"
                         className="size-full bg-azulForte2 items-center justify-center flex"
                     >
-                        <div>{fotos[0].legenda}</div>
+                        <div>{'Fotos'}</div>
                     </div>
                 )}
 
@@ -209,7 +222,7 @@ const Header: React.FC = () => {
                         data-testid="component-video"
                         className="size-full bg-azulForte items-center justify-center flex"
                     >
-                        {video}
+                        {'Vídeo'}
                     </div>
                 )}
 
@@ -218,33 +231,21 @@ const Header: React.FC = () => {
                         data-testid="component-mapa"
                         className="size-full bg-azulFeio items-center justify-center flex"
                     >
-                        {mapa}
+                        {'Mapa'}
                     </div>
                 )}
             </div>
 
             <div className="container mx-auto p-medio flex gap-pequeno">
-                <button
-                    data-testid="btn-open-fotos"
-                    className="bg-azulForte text-white font-bold px-pequeno h-[3rem] rounded-md"
-                    onClick={handleShowFotos}
-                >
+                <Button data-testid="btn-open-fotos" active={showComponent.fotos} onClick={handleShowFotos}>
                     Fotos
-                </button>
-                <button
-                    data-testid="btn-open-video"
-                    className="bg-azulForte text-white font-bold px-pequeno h-[3rem] rounded-md"
-                    onClick={handleShowVideo}
-                >
+                </Button>
+                <Button data-testid="btn-open-video" active={showComponent.video} onClick={handleShowVideo}>
                     Vídeo
-                </button>
-                <button
-                    data-testid="btn-open-mapa"
-                    className="bg-azulForte text-white font-bold px-pequeno h-[3rem] rounded-md"
-                    onClick={handleShowMapa}
-                >
+                </Button>
+                <Button data-testid="btn-open-mapa" active={showComponent.mapa} onClick={handleShowMapa}>
                     Mapa
-                </button>
+                </Button>
             </div>
         </header>
     );
