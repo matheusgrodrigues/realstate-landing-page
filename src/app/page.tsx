@@ -1,31 +1,11 @@
 'use client';
 
 import { default as NextLink } from 'next/link';
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import debounce from './lib/util/debounce';
 import { getRoute } from '@/config/routes';
-
-interface ListItemProps extends React.DetailedHTMLProps<React.LiHTMLAttributes<HTMLLIElement>, HTMLLIElement> {
-    children: React.ReactNode;
-}
-
-const ListItem: React.FC<ListItemProps> = ({ className, children, ...props }) => (
-    <li className={`text-white ${className}`} {...props}>
-        {children}
-    </li>
-);
-
-interface ListProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLUListElement>, HTMLUListElement> {
-    children: React.ReactNode;
-}
-
-const List: React.FC<ListProps> = ({ className, children, ...props }) => (
-    <ul data-testid="list" className={`gap-pequeno flex-col flex ${className}`} {...props}>
-        {children}
-    </ul>
-);
 
 const Icon: React.ForwardRefExoticComponent<
     Omit<React.SVGProps<SVGSVGElement>, 'ref'> & {
@@ -33,19 +13,14 @@ const Icon: React.ForwardRefExoticComponent<
         title?: string;
         icon: 'building-library' | 'bars-3' | 'x-icon';
     } & React.RefAttributes<SVGSVGElement>
-> = forwardRef(({ className, icon, ...props }, ref) => {
+> = forwardRef(({ icon, ...props }, ref) => {
     return (
         <>
             {icon === 'building-library' && (
-                <BuildingLibraryIcon
-                    data-testid="logo"
-                    className={`text-white w-[32px] ${className}`}
-                    ref={ref}
-                    {...props}
-                />
+                <BuildingLibraryIcon data-testid="logo" className={`text-white w-[2rem] `} ref={ref} {...props} />
             )}
-            {icon === 'x-icon' && <XMarkIcon className={`text-white w-[32px] ${className}`} ref={ref} {...props} />}
-            {icon === 'bars-3' && <Bars3Icon className={`text-white w-[32px] ${className}`} ref={ref} {...props} />}
+            {icon === 'x-icon' && <XMarkIcon className={`text-white w-[2rem] `} ref={ref} {...props} />}
+            {icon === 'bars-3' && <Bars3Icon className={`text-white w-[2rem] `} ref={ref} {...props} />}
         </>
     );
 });
@@ -74,14 +49,35 @@ const menu_links = [
 type MenuBgColor = 'bg-azulForte' | 'bg-white';
 
 const MenuPrincipal: React.FC = () => {
+    const [menuHasOpened, setMenuHasOpened] = useState(false);
     const [menuBgColor, setMenuBgColor] = useState<MenuBgColor>('bg-azulForte');
     const [menuIsOpen, setMenuIsOpen] = useState(false);
+    const [isResizing, setIsResizing] = useState(false);
+
+    const menuPrincipalRef = useRef<HTMLElement>(null);
 
     const menuTextClassNames = `${menuBgColor === 'bg-azulForte' ? 'text-white' : 'text-pretoForte'}`;
 
-    console.log('renderouzou');
-
     useEffect(() => {
+        let resizeTimer: NodeJS.Timeout;
+
+        const preventAnimOnResize = () => {
+            setIsResizing(true);
+            clearTimeout(resizeTimer);
+
+            resizeTimer = setTimeout(() => menuIsOpen && setIsResizing(false), 500);
+        };
+
+        window.addEventListener('resize', preventAnimOnResize);
+
+        const outsideClick = (e: MouseEvent | TouchEvent) => {
+            if (menuPrincipalRef.current && !menuPrincipalRef.current.contains(e.target as Node)) {
+                setMenuIsOpen(false);
+            }
+        };
+
+        document.body.addEventListener('click', outsideClick);
+
         const toggleColor = () => {
             if (window.scrollY >= 70) {
                 setMenuBgColor('bg-white');
@@ -96,27 +92,38 @@ const MenuPrincipal: React.FC = () => {
 
         window.addEventListener('scroll', debouncedToggleColor);
 
-        return () => window.removeEventListener('scroll', debouncedToggleColor);
-    }, []);
+        return () => {
+            document.body.removeEventListener('click', outsideClick);
+            window.removeEventListener('scroll', debouncedToggleColor);
+            window.removeEventListener('resize', preventAnimOnResize);
+        };
+    }, [menuIsOpen]);
 
     return (
         <nav
             data-testid="menu-principal"
-            className={`${menuBgColor} fixed top-[0] h-[70px] w-full justify-between items-center flex px-medio ease-linear duration-200`}
+            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full justify-between items-center flex px-medio ease-linear duration-200`}
+            ref={menuPrincipalRef}
         >
             <div>
                 <Icon
                     data-testid="logo"
-                    className={`text-grande font-semiBold w-[32px] ${menuTextClassNames}`}
+                    className={`text-grande font-semiBold w-[2rem] ${menuTextClassNames}`}
                     icon="building-library"
                 />
             </div>
 
-            <div>
+            <div className="items-center flex">
                 <button
                     data-testid="btn-open-menu"
-                    className={`outline-none w-auto md:hidden`}
-                    onClick={() => setMenuIsOpen(!menuIsOpen)}
+                    className={`outline-none size-extraMedio md:hidden`}
+                    onClick={() => {
+                        setMenuIsOpen(!menuIsOpen);
+
+                        if (!menuHasOpened) {
+                            setMenuHasOpened(true);
+                        }
+                    }}
                 >
                     {menuIsOpen ? (
                         <Icon className={menuTextClassNames} icon="x-icon" />
@@ -125,17 +132,17 @@ const MenuPrincipal: React.FC = () => {
                     )}
                 </button>
 
-                {/* TODO: Corrigir para que o animation-slideOut não execute ao entrar pela primeira vez na pagina. -> problema no hidden */}
                 <div
-                    className={`${menuBgColor} md:bg-transparent absolute md:relative top-[70px] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio md:block md:animate-none ${menuIsOpen ? 'block animate-slideIn' : 'animate-slideOut'}`}
+                    className={`${menuBgColor} md:bg-transparent absolute md:relative top-[4rem] md:top-auto right-[0] md:right-auto w-3/4 md:w-auto p-medio md:block md:animate-none 
+                    ${menuIsOpen ? 'block animate-slideIn' : menuHasOpened && !isResizing ? 'animate-slideOut' : 'hidden'}`}
                 >
-                    <List className={`md:flex-row`}>
+                    <ul data-testid="list" className={`gap-pequeno flex-col flex md:flex-row`}>
                         {menu_links.map(({ displayName, path }) => (
-                            <ListItem className={menuTextClassNames} key={displayName}>
+                            <li className={menuTextClassNames} key={displayName}>
                                 <Link href={{ pathname: path }}>{displayName}</Link>
-                            </ListItem>
+                            </li>
                         ))}
-                    </List>
+                    </ul>
                 </div>
             </div>
         </nav>
