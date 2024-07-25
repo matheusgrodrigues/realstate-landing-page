@@ -2,8 +2,8 @@ import type { Config } from 'tailwindcss';
 
 const config: Config = {
     content: [
-        './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
         './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+        './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
         './src/app/**/*.{js,ts,jsx,tsx,mdx}',
     ],
     theme: {
@@ -24,6 +24,7 @@ const config: Config = {
             normal: '1rem',
             medio: '1.12rem',
         },
+
         spacing: {
             extraMedio: '2rem',
             pequeno: '0.75rem',
@@ -31,6 +32,7 @@ const config: Config = {
             medio: '1.25rem',
         },
         colors: {
+            transparent: 'transparent',
             pretoForte: '#151a21',
             azulForte2: '#284eaf',
             azulForte: '#0c1e4b',
@@ -42,6 +44,31 @@ const config: Config = {
             cinza: '#a0a0a0',
             azul: '#284eaf',
             bege: '#818386',
+        },
+
+        extend: {
+            animation: {
+                slideOut: 'slideOut 0.3s linear forwards',
+                slideIn: 'slideIn 0.3s linear forwards',
+            },
+            keyframes: {
+                slideOut: {
+                    '0%': {
+                        transform: 'translateX(0%)',
+                    },
+                    '100%': {
+                        transform: 'translateX(100%)',
+                    },
+                },
+                slideIn: {
+                    '0%': {
+                        transform: 'translateX(100%)',
+                    },
+                    '100%': {
+                        transform: 'translateX(0%)',
+                    },
+                },
+            },
         },
     },
     plugins: [],
