@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import React, { forwardRef, useCallback, useEffect, useState, useRef, HTMLAttributes } from 'react';
+import React, { forwardRef, useCallback, useEffect, useState, useRef, HTMLAttributes, memo } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import debounce from './lib/util/debounce';
@@ -180,12 +180,43 @@ const MenuPrincipal: React.FC = () => {
     );
 };
 
+type Foto = {
+    legenda: string;
+    src: string;
+};
+
+interface FotosProps {
+    fotos: Foto[];
+}
+
+const Fotos: React.NamedExoticComponent<FotosProps> = memo(function Fotos({ fotos }) {
+    return (
+        <div data-testid="component-fotos" className="size-full bg-azulForte2 items-center justify-center flex">
+            {fotos.map((foto, key) => (
+                <div key={key}>{foto.legenda}</div>
+            ))}
+        </div>
+    );
+});
+
+Fotos.displayName = 'Fotos';
+
+const mock_fotos: Foto[] = [
+    {
+        legenda: 'Foto1',
+        src: '',
+    },
+];
+
 const Header: React.FC = () => {
     const [showComponent, setShowComponent] = useState({
         video: false,
         fotos: true,
         mapa: false,
     });
+
+    // TODO: buscar as fotos da api e armazenar em cache.
+    const loadFotos = mock_fotos;
 
     const handleShowFotos = useCallback(
         () =>
@@ -194,6 +225,7 @@ const Header: React.FC = () => {
                 fotos: true,
                 mapa: false,
             }),
+
         []
     );
 
@@ -222,14 +254,7 @@ const Header: React.FC = () => {
             <MenuPrincipal />
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem] border-solid border-2">
-                {showComponent.fotos && (
-                    <div
-                        data-testid="component-fotos"
-                        className="size-full bg-azulForte2 items-center justify-center flex"
-                    >
-                        <div>{'Fotos'}</div>
-                    </div>
-                )}
+                {showComponent.fotos && <Fotos fotos={loadFotos} />}
 
                 {showComponent.video && (
                     <div
@@ -253,22 +278,22 @@ const Header: React.FC = () => {
             <div className="container mx-auto p-medio flex gap-pequeno">
                 <Button
                     data-testid="btn-open-fotos"
-                    config={{ variant: 'default', active: showComponent.fotos }}
                     onClick={handleShowFotos}
+                    config={{ variant: 'default', active: showComponent.fotos }}
                 >
                     Fotos
                 </Button>
                 <Button
                     data-testid="btn-open-video"
-                    config={{ variant: 'default', active: showComponent.video }}
                     onClick={handleShowVideo}
+                    config={{ variant: 'default', active: showComponent.video }}
                 >
                     Vídeo
                 </Button>
                 <Button
                     data-testid="btn-open-mapa"
-                    config={{ variant: 'default', active: showComponent.mapa }}
                     onClick={handleShowMapa}
+                    config={{ variant: 'default', active: showComponent.mapa }}
                 >
                     Mapa
                 </Button>
