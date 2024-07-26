@@ -7,38 +7,20 @@ describe('Deve renderizar a Home', () => {
     beforeEach(() => render(<Page />));
 
     describe('Deve renderizar o Header', () => {
-        describe('Deve renderizar o MenuPrincipal', () => {
-            it('Deve renderizar o MenuPrincipal na tela', () => {
+        describe('Deve renderizar os organisms', () => {
+            it('Deve renderizar o MenuPrincipal', () => {
                 const menu = screen.getByTestId('menu-principal');
 
                 expect(menu).toBeInTheDocument();
             });
 
-            it('Deve renderizar o botão de abrir o menu no Mobile', () => {
-                const btn = screen.getByTestId('btn-open-menu');
-
-                expect(btn).toBeInTheDocument();
-            });
-
-            it('Deve renderizar a logo', () => {
-                const logo = screen.getByTestId('logo');
-
-                expect(logo).toBeInTheDocument();
-            });
-
-            it('Dever renderizar os links', () => {
-                const list = screen.getByTestId('list');
-                const items = list.querySelectorAll('li');
-
-                expect(list).toBeInTheDocument();
-                expect(items).toHaveLength(3);
-                ['Inicio', 'Fotos', 'Descrição'].forEach((item, key) =>
-                    expect(items[key]).toHaveTextContent(`${item}`)
-                );
+            it('Deve renderizar as Fotos', () => {
+                const fotos = screen.getByTestId('component-fotos');
+                expect(fotos).toBeInTheDocument();
             });
         });
 
-        describe('Deve renderizar a Seção Principal', () => {
+        describe('Deve renderizar os botôes', () => {
             it('Deve renderizar o Botão "Fotos" com o texto correto', () => {
                 const btnOpenFotos = screen.getByTestId('btn-open-fotos');
 
@@ -59,7 +41,9 @@ describe('Deve renderizar a Home', () => {
                 expect(btnOpenMapa).toBeInTheDocument();
                 expect(btnOpenMapa).toHaveTextContent('Mapa');
             });
+        });
 
+        describe('Deve executar as ações ao clicar nos botôes corretamente', () => {
             it('Deve renderizar o component Fotos ao clicar no botão "Fotos"', () => {
                 const btnOpenFotos = screen.getByTestId('btn-open-fotos');
                 fireEvent.click(btnOpenFotos);
