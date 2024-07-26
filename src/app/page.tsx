@@ -203,7 +203,7 @@ const Fotos: React.NamedExoticComponent<FotosProps> = memo(function Fotos({ foto
         >
             {fotos.map((foto, key) => (
                 <div key={key}>
-                    <Image priority src={foto.src} alt={foto.legenda} fill sizes="486px" />
+                    <Image priority width={486} height={386} src={foto.src} alt={foto.legenda} sizes="486px" />
                 </div>
             ))}
         </div>
