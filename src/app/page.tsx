@@ -1,11 +1,17 @@
 'use client';
 
+import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import React, { forwardRef, useCallback, useEffect, useState, useRef, HTMLAttributes, memo } from 'react';
 import { BuildingLibraryIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 
 import debounce from './lib/util/debounce';
 import { getRoute } from '@/config/routes';
+
+import Foto1 from '../../public/images/galeria/fotos/1.jpg';
+import Foto2 from '../../public/images/galeria/fotos/2.jpg';
+import Foto3 from '../../public/images/galeria/fotos/3.jpg';
+import Foto4 from '../../public/images/galeria/fotos/4.jpg';
 
 const Icon: React.ForwardRefExoticComponent<
     Omit<React.SVGProps<SVGSVGElement>, 'ref'> & {
@@ -182,7 +188,7 @@ const MenuPrincipal: React.FC = () => {
 
 type Foto = {
     legenda: string;
-    src: string;
+    src: StaticImageData;
 };
 
 interface FotosProps {
@@ -191,9 +197,14 @@ interface FotosProps {
 
 const Fotos: React.NamedExoticComponent<FotosProps> = memo(function Fotos({ fotos }) {
     return (
-        <div data-testid="component-fotos" className="size-full bg-azulForte2 items-center justify-center flex">
+        <div
+            data-testid="component-fotos"
+            className="size-full bg-azulForte2 items-center justify-center flex relative"
+        >
             {fotos.map((foto, key) => (
-                <div key={key}>{foto.legenda}</div>
+                <div key={key}>
+                    <Image priority src={foto.src} alt={foto.legenda} fill sizes="486px" />
+                </div>
             ))}
         </div>
     );
@@ -204,7 +215,19 @@ Fotos.displayName = 'Fotos';
 const mock_fotos: Foto[] = [
     {
         legenda: 'Foto1',
-        src: '',
+        src: Foto1,
+    },
+    {
+        legenda: 'Foto2',
+        src: Foto2,
+    },
+    {
+        legenda: 'Foto3',
+        src: Foto3,
+    },
+    {
+        legenda: 'Foto4',
+        src: Foto4,
     },
 ];
 
@@ -214,9 +237,6 @@ const Header: React.FC = () => {
         fotos: true,
         mapa: false,
     });
-
-    // TODO: buscar as fotos da api e armazenar em cache.
-    const loadFotos = mock_fotos;
 
     const handleShowFotos = useCallback(
         () =>
@@ -254,7 +274,7 @@ const Header: React.FC = () => {
             <MenuPrincipal />
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem] border-solid border-2">
-                {showComponent.fotos && <Fotos fotos={loadFotos} />}
+                {showComponent.fotos && <Fotos fotos={mock_fotos} />}
 
                 {showComponent.video && (
                     <div
@@ -275,7 +295,7 @@ const Header: React.FC = () => {
                 )}
             </div>
 
-            <div className="container mx-auto p-medio flex gap-pequeno">
+            <div className="container mx-auto py-medio flex gap-pequeno">
                 <Button
                     data-testid="btn-open-fotos"
                     onClick={handleShowFotos}
