@@ -1,52 +1,10 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
-
-import Foto1 from '../../public/images/galeria/fotos/1.jpg';
-import Foto2 from '../../public/images/galeria/fotos/2.jpg';
-import Foto3 from '../../public/images/galeria/fotos/3.jpg';
-import Foto4 from '../../public/images/galeria/fotos/4.jpg';
+import React, { Suspense, useCallback, useState } from 'react';
 
 import Button from './components/atoms/Button';
-
 import MenuPrincipal from './components/organism/MenuPrincipal';
-import Fotos, { Foto } from './components/organism/Fotos';
-
-const mock_fotos: Foto[] = [
-    {
-        legenda: 'Foto1',
-        src: Foto1,
-    },
-    {
-        legenda: 'Foto2',
-        src: Foto2,
-    },
-    {
-        legenda: 'Foto3',
-        src: Foto3,
-    },
-    {
-        legenda: 'Foto4',
-        src: Foto4,
-    },
-
-    {
-        legenda: 'Foto1',
-        src: Foto1,
-    },
-    {
-        legenda: 'Foto2',
-        src: Foto2,
-    },
-    {
-        legenda: 'Foto3',
-        src: Foto3,
-    },
-    {
-        legenda: 'Foto4',
-        src: Foto4,
-    },
-];
+import GaleriaPrincipal from './data/GaleriaPrincipal/GaleriaPrincipal';
 
 const Header: React.FC = () => {
     const [showComponent, setShowComponent] = useState({
@@ -91,7 +49,11 @@ const Header: React.FC = () => {
             <MenuPrincipal />
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem]">
-                {showComponent.fotos && <Fotos fotos={mock_fotos} />}
+                {showComponent.fotos && (
+                    <Suspense fallback={<>Loading galeria...</>}>
+                        <GaleriaPrincipal />
+                    </Suspense>
+                )}
 
                 {showComponent.video && (
                     <div data-testid="component-video" className="size-full  items-center justify-center flex">

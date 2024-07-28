@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from 'next/image';
 import { memo } from 'react';
 
-import Button from '../atoms/Button';
-import Icon from '../atoms/Icon';
+import Button from '../../atoms/Button';
+import Icon from '../../atoms/Icon';
 
 export type Foto = {
     legenda: string;
