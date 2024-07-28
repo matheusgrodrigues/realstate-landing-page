@@ -12,7 +12,7 @@ import Button from './components/atoms/Button';
 import MenuPrincipal from './components/organism/MenuPrincipal';
 import Fotos, { Foto } from './components/organism/Fotos';
 
-export const mock_fotos: Foto[] = [
+const mock_fotos: Foto[] = [
     {
         legenda: 'Foto1',
         src: Foto1,

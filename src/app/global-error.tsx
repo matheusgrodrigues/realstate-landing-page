@@ -2,7 +2,7 @@
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
     return (
-        <html>
+        <html lang="pt-BR">
             <body>
                 <h2>Something went wrong!</h2>
                 <button onClick={() => reset()}>Try again</button>

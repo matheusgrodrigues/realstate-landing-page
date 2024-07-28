@@ -45,6 +45,7 @@ const Fotos: React.NamedExoticComponent<FotosProps> = memo(function Fotos({ foto
                         }}
                     />
                 </Button>
+
                 <Button
                     data-testid="component-fotos-arrow-right"
                     config={{
