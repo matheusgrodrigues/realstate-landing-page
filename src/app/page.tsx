@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import Header from './components/template/Header';
 import FotosProvider from './providers/Fotos/FotosProvider';
 
@@ -7,11 +6,7 @@ export default function Home() {
         <>
             <Header
                 providers={{
-                    fotos: (
-                        <Suspense fallback="Carrengando fotos.">
-                            <FotosProvider />,
-                        </Suspense>
-                    ),
+                    fotos: <FotosProvider />,
                 }}
             />
         </>
