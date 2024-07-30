@@ -19,27 +19,17 @@ const Icon: React.ForwardRefRenderFunction<SVGSVGElement, IconProps> = ({ config
             {icon === 'building-library' && (
                 <BuildingLibraryIcon
                     data-testid="logo"
-                    className={`text-white w-[2rem] ${customClassName}`}
+                    className={`w-[2rem] ${customClassName}`}
                     ref={ref}
                     {...props}
                 />
             )}
-
             {icon === 'arrow-right' && (
-                <ArrowRightIcon className={`text-white w-[2rem] ${customClassName}`} ref={ref} {...props} />
+                <ArrowRightIcon className={`w-[2rem] ${customClassName}`} ref={ref} {...props} />
             )}
-
-            {icon === 'arrow-left' && (
-                <ArrowLeftIcon className={`text-white w-[2rem] ${customClassName}`} ref={ref} {...props} />
-            )}
-
-            {icon === 'x-icon' && (
-                <XMarkIcon className={`text-white w-[2rem] ${customClassName}`} ref={ref} {...props} />
-            )}
-
-            {icon === 'bars-3' && (
-                <Bars3Icon className={`text-white w-[2rem] ${customClassName}`} ref={ref} {...props} />
-            )}
+            {icon === 'arrow-left' && <ArrowLeftIcon className={`w-[2rem] ${customClassName}`} ref={ref} {...props} />}
+            {icon === 'x-icon' && <XMarkIcon className={`w-[2rem] ${customClassName}`} ref={ref} {...props} />}
+            {icon === 'bars-3' && <Bars3Icon className={`w-[2rem] ${customClassName}`} ref={ref} {...props} />}
         </>
     );
 };

@@ -71,7 +71,7 @@ const MainMenu: React.FC = () => {
     return (
         <nav
             data-testid="menu-principal"
-            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full px-medio ease-linear duration-200 flex items-center z-50`}
+            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full px-medio ease-linear duration-200 flex items-center z-50 ${menuBgColor === 'bg-white' ? 'border-b-2 border-solid border-azulFeio' : ''}`}
             ref={menuPrincipalRef}
         >
             <div className="w-full justify-between items-center flex container mx-auto">
@@ -79,7 +79,7 @@ const MainMenu: React.FC = () => {
                     <Icon
                         data-testid="logo"
                         config={{
-                            customClassName: `text-grande font-semiBold w-[2rem] ${menuTextClassNames}`,
+                            customClassName: `text-grande text-pretoForte w-[2rem] ${menuTextClassNames}`,
                             icon: 'building-library',
                         }}
                     />
