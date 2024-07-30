@@ -9,7 +9,7 @@ import Icon from '../atoms/Icon';
 
 type MenuBgColor = 'bg-azulForte' | 'bg-white';
 
-const MenuPrincipal: React.FC = () => {
+const MainMenu: React.FC = () => {
     const [menuHasOpened, setMenuHasOpened] = useState(false);
     const [menuBgColor, setMenuBgColor] = useState<MenuBgColor>('bg-azulForte');
     const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -71,7 +71,7 @@ const MenuPrincipal: React.FC = () => {
     return (
         <nav
             data-testid="menu-principal"
-            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full px-medio ease-linear duration-200 flex items-center`}
+            className={`${menuBgColor} fixed top-[0] h-[4rem] w-full px-medio ease-linear duration-200 flex items-center z-50`}
             ref={menuPrincipalRef}
         >
             <div className="w-full justify-between items-center flex container mx-auto">
@@ -128,4 +128,4 @@ const MenuPrincipal: React.FC = () => {
     );
 };
 
-export default MenuPrincipal;
+export default MainMenu;

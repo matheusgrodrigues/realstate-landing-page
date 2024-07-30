@@ -5,9 +5,9 @@ type GalleryName = 'mainGallery';
 const domain = process.env.DOMAIN;
 
 const GalleryService = {
-    getImages: async (galleryName: GalleryName): Promise<GallerySchema[]> => {
+    getGallery: async (galleryName: GalleryName): Promise<GallerySchema[]> => {
         const res = await fetch(`${domain}/api/${galleryName}`);
-        const data = await res.json();
+        const { data } = await res.json();
 
         return data;
     },

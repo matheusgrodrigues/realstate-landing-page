@@ -1,6 +1,6 @@
 import { screen, render } from '@testing-library/react';
 
-import MenuPrincipal from '../../../../src/app/components/organism/MenuPrincipal';
+import MenuPrincipal from '../../../../src/app/components/organism/MainMenu';
 
 describe('Deve renderizar o MenuPrincipal', () => {
     beforeEach(() => render(<MenuPrincipal />));

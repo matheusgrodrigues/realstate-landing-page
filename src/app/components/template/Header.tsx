@@ -1,15 +1,15 @@
 'use client';
 
 import { Suspense, useCallback, useState } from 'react';
-import MenuPrincipal from '../organism/MenuPrincipal';
+import MainMenu from '../organism/MainMenu';
 import Gallery from '../organism/Gallery';
 import Button from '../atoms/Button';
 
-import { GalleryImage } from '@/schema/GallerySchema';
+import { GallerySchema } from '@/schema/GallerySchema';
 
 interface HeaderProps {
     data: {
-        galleryImages: GalleryImage[];
+        gallery: GallerySchema[];
     };
 }
 const Header: React.FC<HeaderProps> = ({ data }) => {
@@ -52,12 +52,12 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
 
     return (
         <header className="relative" data-testid="header-template">
-            <MenuPrincipal />
+            <MainMenu />
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem]">
                 {showComponent.fotos && (
                     <Suspense fallback="Carregando fotos...">
-                        <Gallery images={data.galleryImages} />
+                        <Gallery gallery={data.gallery && data.gallery[0]} />
                     </Suspense>
                 )}
 

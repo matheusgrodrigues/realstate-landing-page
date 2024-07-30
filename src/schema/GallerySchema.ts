@@ -11,7 +11,7 @@ interface GalleryImageFormat {
     sizeInBytes: number;
 }
 
-export interface GalleryImage {
+interface GalleryImage {
     id: number;
     attributes: {
         name: string;
