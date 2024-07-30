@@ -1,32 +1,16 @@
 import Header from '@/app/components/template/Header';
-import FotosProvider from '@/app/providers/Fotos/FotosProvider';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { Suspense } from 'react';
 
 describe('Header', () => {
+    beforeEach(() => render(<Header data={{ fotos: [] }} />));
+
     it('Deve renderizar o header', async () => {
-        global.fetch = jest.fn().mockResolvedValue({
-            json: jest.fn().mockResolvedValue([]),
-        });
-
-        render(
-            <Header
-                providers={{
-                    fotos: (
-                        <Suspense>
-                            <FotosProvider />
-                        </Suspense>
-                    ),
-                }}
-            />
-        );
-
         const menu = screen.getByTestId('menu-principal');
 
         expect(menu).toBeInTheDocument();
     });
 
-    /* describe('Deve renderizar os organisms', () => {
+    describe('Deve renderizar os organisms', () => {
         it('Deve renderizar o MenuPrincipal', () => {
             const menu = screen.getByTestId('menu-principal');
 
@@ -101,5 +85,5 @@ describe('Header', () => {
             expect(video).not.toBeInTheDocument();
             expect(mapa).toBeInTheDocument();
         });
-    }); */
+    });
 });

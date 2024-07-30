@@ -2,14 +2,17 @@
 
 import { Suspense, useCallback, useState } from 'react';
 import MenuPrincipal from '../organism/MenuPrincipal';
+import Gallery from '../organism/Gallery';
 import Button from '../atoms/Button';
 
+import { GalleryImage } from '@/schema/GallerySchema';
+
 interface HeaderProps {
-    providers: {
-        fotos: React.ReactNode;
+    data: {
+        galleryImages: GalleryImage[];
     };
 }
-const Header: React.FC<HeaderProps> = ({ providers }) => {
+const Header: React.FC<HeaderProps> = ({ data }) => {
     const [showComponent, setShowComponent] = useState({
         video: false,
         fotos: true,
@@ -48,11 +51,15 @@ const Header: React.FC<HeaderProps> = ({ providers }) => {
     );
 
     return (
-        <header className="relative">
+        <header className="relative" data-testid="header-template">
             <MenuPrincipal />
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem]">
-                {showComponent.fotos && <Suspense fallback="Carregando fotos...">{providers.fotos}</Suspense>}
+                {showComponent.fotos && (
+                    <Suspense fallback="Carregando fotos...">
+                        <Gallery images={data.galleryImages} />
+                    </Suspense>
+                )}
 
                 {showComponent.video && (
                     <div data-testid="component-video" className="size-full items-center justify-center flex">

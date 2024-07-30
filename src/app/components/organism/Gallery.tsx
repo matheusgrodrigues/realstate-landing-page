@@ -1,23 +1,20 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { memo } from 'react';
 
 import Button from '../atoms/Button';
 import Icon from '../atoms/Icon';
 
-export type Foto = {
-    legenda: string;
-    src: StaticImageData;
-};
+import { GalleryImage } from '@/schema/GallerySchema';
 
-interface FotosProps {
-    fotos: Foto[];
+interface GalleryProps {
+    images: GalleryImage[];
 }
 
-const Fotos: React.NamedExoticComponent<FotosProps> = memo(function Fotos({ fotos }) {
+const Gallery: React.NamedExoticComponent<GalleryProps> = memo(function Fotos({ images }) {
     return (
         <div data-testid="component-fotos" className="size-full relative">
             <div className="flex justify-center items-center size-full">
-                {fotos.map((foto, key) => (
+                {images.map((image, key) => (
                     <div className="h-full relative w-full md:min-w-[486px] md:max-w-[486px]" key={key}>
                         <Image
                             data-testid="component-fotos-foto"
@@ -25,8 +22,8 @@ const Fotos: React.NamedExoticComponent<FotosProps> = memo(function Fotos({ foto
                             quality={100}
                             sizes="(max-width: 750px) 100vw, 486px"
                             fill
-                            src={foto.src}
-                            alt={foto.legenda}
+                            src={image.attributes.url}
+                            alt={image.attributes.caption ?? ''}
                         />
                     </div>
                 ))}
@@ -63,6 +60,6 @@ const Fotos: React.NamedExoticComponent<FotosProps> = memo(function Fotos({ foto
     );
 });
 
-Fotos.displayName = 'Fotos';
+Gallery.displayName = 'Gallery';
 
-export default Fotos;
+export default Gallery;

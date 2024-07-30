@@ -1,23 +1,19 @@
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 
 import Page from '@/app/page';
-import { Suspense } from 'react';
 
 describe('Home', () => {
     global.fetch = jest.fn().mockResolvedValue({
         json: jest.fn().mockResolvedValue([]),
     });
 
-    beforeEach(async () =>
-        render(
-            <Suspense>
-                <Page />
-            </Suspense>
-        )
-    );
+    beforeEach(async () => {
+        const page = await Page();
+        render(page);
+    });
 
-    it('Deve renderizar o Header', () => {
+    it('Deve renderizar o Header', async () => {
         const header = screen.getByTestId('header-template');
         expect(header).toBeInTheDocument();
     });

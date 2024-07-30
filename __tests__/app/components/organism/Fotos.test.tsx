@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Fotos from '../../../../src/app/components/organism/Fotos';
+import Fotos from '../../../../src/app/components/organism/Gallery';
 
 describe('Deve renderizar o organism fotos corretamente', () => {
     beforeEach(() => render(<Fotos fotos={[]} />));

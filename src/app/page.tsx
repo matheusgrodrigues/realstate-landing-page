@@ -1,14 +1,13 @@
 import Header from './components/template/Header';
-import FotosProvider from './providers/Fotos/FotosProvider';
 
-export default function Home() {
+import GalleryService from '@/services/GalleryService';
+
+export default async function Home() {
+    const mainGalleryImages = await GalleryService.getImages('mainGallery');
+    // TODO: corrigir a listagem das imagens da galeria
     return (
         <>
-            <Header
-                providers={{
-                    fotos: <FotosProvider />,
-                }}
-            />
+            <Header data={{ galleryImages: mainGalleryImages }} />
         </>
     );
 }
