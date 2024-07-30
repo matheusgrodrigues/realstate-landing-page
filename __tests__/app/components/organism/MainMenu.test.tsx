@@ -1,9 +1,9 @@
 import { screen, render } from '@testing-library/react';
 
-import MenuPrincipal from '../../../../src/app/components/organism/MainMenu';
+import MainMenu from '../../../../src/app/components/organism/MainMenu';
 
-describe('Deve renderizar o MenuPrincipal', () => {
-    beforeEach(() => render(<MenuPrincipal />));
+describe('Deve renderizar o organism MainMenu', () => {
+    beforeEach(() => render(<MainMenu />));
 
     it('Deve renderizar o botão de abrir o menu no Mobile', () => {
         const btn = screen.getByTestId('btn-open-menu');

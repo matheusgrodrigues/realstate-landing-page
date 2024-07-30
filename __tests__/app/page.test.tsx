@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 
 import Page from '@/app/page';
 
-describe('Home', () => {
+describe('Deve renderizar a Home', () => {
     global.fetch = jest.fn().mockResolvedValue({
         json: jest.fn().mockResolvedValue([]),
     });
@@ -13,7 +13,7 @@ describe('Home', () => {
         render(page);
     });
 
-    it('Deve renderizar o Header', async () => {
+    it('O template Header deve estar na tela', async () => {
         const header = screen.getByTestId('header-template');
         expect(header).toBeInTheDocument();
     });

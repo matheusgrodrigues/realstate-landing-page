@@ -1,31 +1,31 @@
 import Header from '@/app/components/template/Header';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 
-describe('Header', () => {
-    beforeEach(() => render(<Header data={{ fotos: [] }} />));
+import mock_gallery from '../../../../__mocks__/app/components/organism/Gallery';
 
-    it('Deve renderizar o header', async () => {
+describe('Dever renderizar o template Header', () => {
+    beforeEach(() => render(<Header data={{ gallery: mock_gallery }} />));
+
+    it('Deve renderizar o MainMenu', () => {
         const menu = screen.getByTestId('menu-principal');
 
         expect(menu).toBeInTheDocument();
     });
 
-    describe('Deve renderizar os organisms', () => {
-        it('Deve renderizar o MenuPrincipal', () => {
-            const menu = screen.getByTestId('menu-principal');
+    it('Deve renderizar as Fotos', () => {
+        const fotos = screen.getByTestId('component-gallery');
+        expect(fotos).toBeInTheDocument();
+    });
 
-            expect(menu).toBeInTheDocument();
-        });
+    it('Deve ter pelo menos 3 fotos na tela', () => {
+        const fotos = screen.getAllByTestId('component-gallery-image');
 
-        it('Deve renderizar as Fotos', () => {
-            const fotos = screen.getByTestId('component-fotos');
-            expect(fotos).toBeInTheDocument();
-        });
+        expect(fotos.length).toBeGreaterThanOrEqual(3);
     });
 
     describe('Deve renderizar os botôes', () => {
         it('Deve renderizar o Botão "Fotos" com o texto correto', () => {
-            const btnOpenFotos = screen.getByTestId('btn-open-fotos');
+            const btnOpenFotos = screen.getByTestId('btn-open-gallery');
 
             expect(btnOpenFotos).toBeInTheDocument();
             expect(btnOpenFotos).toHaveTextContent('Fotos');
@@ -48,11 +48,11 @@ describe('Header', () => {
 
     describe('Deve executar as ações ao clicar nos botôes corretamente', () => {
         it('Deve renderizar o component Fotos ao clicar no botão "Fotos"', () => {
-            const btnOpenFotos = screen.getByTestId('btn-open-fotos');
+            const btnOpenFotos = screen.getByTestId('btn-open-gallery');
             fireEvent.click(btnOpenFotos);
 
             const video = screen.queryByTestId('component-video');
-            const fotos = screen.queryByTestId('component-fotos');
+            const fotos = screen.queryByTestId('component-gallery');
             const mapa = screen.queryByTestId('component-mapa');
 
             expect(fotos).toBeInTheDocument();

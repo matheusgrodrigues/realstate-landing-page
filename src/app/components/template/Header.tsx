@@ -79,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
 
             <div className="container mx-auto py-medio flex gap-pequeno">
                 <Button
-                    data-testid="btn-open-fotos"
+                    data-testid="btn-open-gallery"
                     onClick={handleShowFotos}
                     config={{ variant: 'default', active: showComponent.fotos }}
                 >

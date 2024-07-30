@@ -2,7 +2,7 @@ import { GallerySchema } from '@/schema/GallerySchema';
 
 type GalleryName = 'mainGallery';
 
-const domain = process.env.DOMAIN;
+const domain = process.env.NEXT_PUBLIC_DOMAIN;
 
 const GalleryService = {
     getGallery: async (galleryName: GalleryName): Promise<GallerySchema[]> => {

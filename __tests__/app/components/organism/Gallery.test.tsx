@@ -1,22 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import Gallery from '../../../../src/app/components/organism/Gallery';
 
-import mock_gallery from '../../../../__mocks__/app/components/organism/Gallery';
-
-describe('organism Gallery', () => {
+describe('Deve renderizar o organism Gallery', () => {
     beforeEach(() => {
-        render(<Gallery gallery={mock_gallery[0]} />);
+        render(<Gallery gallery={undefined} />);
     });
 
-    // TODO: quando tiver consumindo as fotos, criar um teste para verificar se as fotos forão carregadas na tela.
+    it('Deve renderizar as Fotos', () => {
+        const fotos = screen.getByTestId('component-gallery');
+        expect(fotos).toBeInTheDocument();
+    });
 
     it('Deve renderizar a arrow-left', () => {
-        const arrowLeft = screen.getByTestId('component-fotos-arrow-left');
+        const arrowLeft = screen.getByTestId('component-gallery-arrow-left');
         expect(arrowLeft).toBeInTheDocument();
     });
 
     it('Deve renderizar a arrow-right', () => {
-        const arrowRight = screen.getByTestId('component-fotos-arrow-right');
+        const arrowRight = screen.getByTestId('component-gallery-arrow-right');
         expect(arrowRight).toBeInTheDocument();
     });
 });
