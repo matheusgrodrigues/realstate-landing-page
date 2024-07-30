@@ -20,8 +20,8 @@ interface GalleryImage {
         width: number;
         height: number;
         formats: {
-            small: GalleryImageFormat;
-            thumbnail: GalleryImageFormat;
+            small?: GalleryImageFormat;
+            thumbnail?: GalleryImageFormat;
         };
         hash: string;
         ext: string;

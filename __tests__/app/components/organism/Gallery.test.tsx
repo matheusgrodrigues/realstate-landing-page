@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react';
-import Fotos from '../../../../src/app/components/organism/Gallery';
+import Gallery from '../../../../src/app/components/organism/Gallery';
 
-describe('Deve renderizar o organism fotos corretamente', () => {
-    beforeEach(() => render(<Fotos fotos={[]} />));
+import mock_gallery from '../../../../__mocks__/app/components/organism/Gallery';
+
+describe('organism Gallery', () => {
+    beforeEach(() => {
+        render(<Gallery gallery={mock_gallery[0]} />);
+    });
 
     // TODO: quando tiver consumindo as fotos, criar um teste para verificar se as fotos forão carregadas na tela.
 

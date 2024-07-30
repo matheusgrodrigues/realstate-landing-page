@@ -11,8 +11,9 @@ interface GalleryProps {
 }
 
 const Gallery: React.NamedExoticComponent<GalleryProps> = memo(function Fotos({ gallery }) {
-    const images = gallery.attributes.images.data;
+    const images = gallery ? gallery.attributes.images.data : [];
 
+    console.log(gallery);
     return (
         <div data-testid="component-fotos" className="size-full relative">
             <div className="flex justify-center items-center size-full">
