@@ -1,0 +1,5 @@
+{
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "jest.rootPath": "/home/matheus/desktop/repositorios/frontend/realstate-landing-page",
+    "jest.jestCommandLine": "npx run jest"
+}

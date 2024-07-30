@@ -1,4 +1,4 @@
-type RoutesName = 'inicio' | 'fotos' | 'descricao';
+type RoutesName = 'inicio' | 'fotos' | 'descricao' | 'home';
 
 interface RoutesProps {
     displayName: string;
@@ -20,6 +20,11 @@ const routes: RoutesProps[] = [
         displayName: 'Inicio',
         name: 'descricao',
         path: '#section-description',
+    },
+    {
+        displayName: 'Home',
+        name: 'home',
+        path: '/',
     },
 ];
 
