@@ -41,6 +41,7 @@ const Gallery: React.NamedExoticComponent<GalleryProps> = memo(function Gallery(
                 >
                     <Icon
                         config={{
+                            color: 'text-pretoForte',
                             icon: 'arrow-left',
                         }}
                     />
@@ -54,6 +55,7 @@ const Gallery: React.NamedExoticComponent<GalleryProps> = memo(function Gallery(
                 >
                     <Icon
                         config={{
+                            color: 'text-pretoForte',
                             icon: 'arrow-right',
                         }}
                     />
