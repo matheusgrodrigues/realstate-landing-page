@@ -1,14 +1,13 @@
 import Image from 'next/image';
 import { memo } from 'react';
 
-import { SwiperSlide, Swiper, useSwiper } from 'swiper/react';
+import { SwiperSlide, useSwiper, Swiper } from 'swiper/react';
+import 'swiper/css';
 
 import Button from '../atoms/Button';
 import Icon from '../atoms/Icon';
 
 import { GallerySchema } from '@/schema/GallerySchema';
-
-import 'swiper/css';
 
 const NextPrevButton: React.FC = () => {
     const swiper = useSwiper();
@@ -19,7 +18,8 @@ const NextPrevButton: React.FC = () => {
                 data-testid="component-gallery-arrow-left"
                 onClick={() => swiper.slidePrev()}
                 config={{
-                    customClassName: 'size-[3.5rem] bg-white rounded-full p-pequeno',
+                    customClassName:
+                        'size-[3.5rem] bg-white rounded-full p-pequeno absolute left-medio top-[45%] z-[9999]',
                 }}
             >
                 <Icon
@@ -34,7 +34,8 @@ const NextPrevButton: React.FC = () => {
                 data-testid="component-gallery-arrow-right"
                 onClick={() => swiper.slideNext()}
                 config={{
-                    customClassName: 'size-[3.5rem] bg-white rounded-full p-pequeno',
+                    customClassName:
+                        'size-[3.5rem] bg-white rounded-full p-pequeno absolute right-medio top-[45%] z-[9999]',
                 }}
             >
                 <Icon
@@ -58,28 +59,38 @@ const Gallery: React.NamedExoticComponent<GalleryProps> = memo(function Gallery(
     return (
         <Swiper
             data-testid="component-gallery"
-            slidesPerView={3}
             className="flex justify-center items-center relative size-full"
+            breakpoints={{
+                640: {
+                    slidesPerView: 1,
+                    spaceBetween: 0,
+                },
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 2,
+                },
+            }}
         >
             {images.length > 0 &&
                 images.map((image, key) => (
                     <SwiperSlide key={key}>
                         <Image
-                            width={486}
-                            height={683}
                             data-testid="component-gallery-image"
                             priority
                             quality={100}
                             sizes="(max-width: 750px) 100vw, 486px"
+                            fill
                             src={`${process.env.NEXT_PUBLIC_STRAPI_URL}${image.attributes.url}`}
                             alt={`${image.attributes.caption}`}
                         />
                     </SwiperSlide>
                 ))}
 
-            <div className="flex justify-between items-center size-full px-extraMedio absolute top-[0] z-[9999]">
-                <NextPrevButton />
-            </div>
+            <NextPrevButton />
         </Swiper>
     );
 });
