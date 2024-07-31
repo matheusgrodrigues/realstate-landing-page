@@ -6,6 +6,7 @@ import Gallery from '../organism/Gallery';
 import Button from '../atoms/Button';
 
 import { GallerySchema } from '@/schema/GallerySchema';
+import Video from '../organism/Video';
 
 interface HeaderProps {
     data: {
@@ -62,8 +63,15 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
                 )}
 
                 {showComponent.video && (
-                    <div data-testid="component-video" className="size-full items-center justify-center flex">
-                        {'Vídeo'}
+                    <div data-testid="component-video" className="size-full items-center justify-center flex bg-preto">
+                        <Suspense fallback="Carregandi vídeo...">
+                            <Video
+                                video={{
+                                    title: 'Titulo do vídeo',
+                                    url: 'https://www.youtube.com/embed/jPkBJY1KI_Q?si=sadSVcsFdHu1pPMf',
+                                }}
+                            />
+                        </Suspense>
                     </div>
                 )}
 
