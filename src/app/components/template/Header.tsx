@@ -1,16 +1,20 @@
 'use client';
 
 import { Suspense, useCallback, useState } from 'react';
-import MainMenu from '../organism/MainMenu';
-import Gallery from '../organism/Gallery';
+
 import Button from '../atoms/Button';
 
-import { GallerySchema } from '@/schema/GallerySchema';
-import Video from '../organism/Video';
+import Gallery from '../organism/Gallery';
+import Video from '../atoms/Video';
+import Menu from '../organism/Menu';
+
+import GallerySchema from '@/schema/GallerySchema';
+import VideoSchema from '@/schema/VideoSchema';
 
 interface HeaderProps {
     data: {
         gallery: GallerySchema[];
+        video: VideoSchema[];
     };
 }
 const Header: React.FC<HeaderProps> = ({ data }) => {
@@ -53,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
 
     return (
         <header className="relative" data-testid="header-template">
-            <MainMenu />
+            <Menu />
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem]">
                 {showComponent.fotos && (
@@ -64,13 +68,8 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
 
                 {showComponent.video && (
                     <div data-testid="component-video" className="size-full items-center justify-center flex bg-preto">
-                        <Suspense fallback="Carregandi vídeo...">
-                            <Video
-                                video={{
-                                    title: 'Titulo do vídeo',
-                                    url: 'https://www.youtube.com/embed/jPkBJY1KI_Q?si=sadSVcsFdHu1pPMf',
-                                }}
-                            />
+                        <Suspense fallback="Carregando vídeo...">
+                            <Video video={data.video && data.video[0]} />
                         </Suspense>
                     </div>
                 )}
@@ -85,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
                 )}
             </div>
 
-            <div className="container mx-auto py-medio px-medio flex overflow-x-auto gap-pequeno">
+            <div className="container mx-auto py-medio px-medio md:px-[0] flex overflow-x-auto gap-pequeno">
                 <Button
                     data-testid="btn-open-gallery"
                     onClick={handleShowFotos}

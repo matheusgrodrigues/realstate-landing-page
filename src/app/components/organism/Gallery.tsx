@@ -7,7 +7,7 @@ import 'swiper/css';
 import Button from '../atoms/Button';
 import Icon from '../atoms/Icon';
 
-import { GallerySchema } from '@/schema/GallerySchema';
+import GallerySchema from '@/schema/GallerySchema';
 
 const NextPrevButton: React.FC = () => {
     const swiper = useSwiper();
