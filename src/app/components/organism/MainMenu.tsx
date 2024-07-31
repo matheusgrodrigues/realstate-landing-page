@@ -17,7 +17,9 @@ const MainMenu: React.FC = () => {
 
     const menuPrincipalRef = useRef<HTMLElement>(null);
 
-    const menuTextClassNames = `${menuBgColor === 'bg-azulForte' ? 'text-white' : 'text-pretoForte'}`;
+    const menuTextClassNames = `${menuBgColor === 'bg-azulForte' ? 'text-white' : 'text-pretoForte'}` as
+        | 'text-white'
+        | 'text-pretoForte';
 
     const toggleMenu = useCallback(() => {
         setMenuIsOpen(!menuIsOpen);
@@ -79,7 +81,7 @@ const MainMenu: React.FC = () => {
                     <Icon
                         data-testid="logo"
                         config={{
-                            customClassName: `text-grande text-pretoForte w-[2rem] ${menuTextClassNames}`,
+                            color: menuTextClassNames,
                             icon: 'building-library',
                         }}
                     />
@@ -96,14 +98,14 @@ const MainMenu: React.FC = () => {
                         {menuIsOpen ? (
                             <Icon
                                 config={{
-                                    customClassName: menuTextClassNames,
+                                    color: menuTextClassNames,
                                     icon: 'x-icon',
                                 }}
                             />
                         ) : (
                             <Icon
                                 config={{
-                                    customClassName: menuTextClassNames,
+                                    color: menuTextClassNames,
                                     icon: 'bars-3',
                                 }}
                             />

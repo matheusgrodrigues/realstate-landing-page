@@ -3,6 +3,7 @@ import bundleAnalyzer from '@next/bundle-analyzer';
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     experimental: { taint: true },
+    transpilePackages: ['swiper'],
     images: {
         remotePatterns: [
             {
