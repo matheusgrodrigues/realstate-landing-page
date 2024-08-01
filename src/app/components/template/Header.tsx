@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
                 {showComponent.video && (
                     <div data-testid="component-video" className="size-full items-center justify-center flex bg-preto">
                         <Suspense fallback="Carregando vídeo...">
-                            <Video video={data.video && data.video[0]} />
+                            <Video data-testid="atom-video" video={data.video && data.video[0]} />
                         </Suspense>
                     </div>
                 )}

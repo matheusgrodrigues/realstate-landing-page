@@ -1,4 +1,4 @@
-import { GallerySchema } from '@/schema/GallerySchema';
+import GallerySchema from '@/schema/GallerySchema';
 
 const mock_gallery: GallerySchema[] = [
     {
