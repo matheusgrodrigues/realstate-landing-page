@@ -62,14 +62,14 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
             <div className="w-full items-center flex mt-[4rem] h-[30rem]">
                 {showComponent.fotos && (
                     <Suspense fallback="Carregando fotos...">
-                        <Gallery gallery={data.gallery && data.gallery[0]} />
+                        <Gallery gallery={data.gallery.length > 0 ? data.gallery[0] : undefined} />
                     </Suspense>
                 )}
 
                 {showComponent.video && (
                     <div data-testid="component-video" className="size-full items-center justify-center flex bg-preto">
                         <Suspense fallback="Carregando vídeo...">
-                            <Video data-testid="atom-video" video={data.video && data.video[0]} />
+                            <Video data-testid="atom-video" video={data.video.length > 0 ? data.video[0] : undefined} />
                         </Suspense>
                     </div>
                 )}
