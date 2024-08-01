@@ -3,21 +3,17 @@
 import { Suspense, useCallback, useState } from 'react';
 
 import Button from '../atoms/Button';
-
-import Gallery from '../organism/Gallery';
-import Video from '../atoms/Video';
 import Menu from '../organism/Menu';
 
-import GallerySchema from '@/schema/GallerySchema';
-import VideoSchema from '@/schema/VideoSchema';
+import BaseClientProvider from '../BaseClientProvider';
 
 interface HeaderProps {
-    data: {
-        gallery: GallerySchema[];
-        video: VideoSchema[];
+    providers: {
+        gallery: React.ReactNode;
+        video: React.ReactNode;
     };
 }
-const Header: React.FC<HeaderProps> = ({ data }) => {
+const Header: React.FC<HeaderProps> = ({ providers }) => {
     const [showComponent, setShowComponent] = useState({
         video: false,
         fotos: true,
@@ -61,15 +57,15 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem]">
                 {showComponent.fotos && (
-                    <Suspense fallback="Carregando fotos...">
-                        <Gallery gallery={data.gallery.length > 0 ? data.gallery[0] : undefined} />
+                    <Suspense fallback="Carregando galeria...">
+                        <BaseClientProvider render={providers.gallery} />
                     </Suspense>
                 )}
 
                 {showComponent.video && (
                     <div data-testid="component-video" className="size-full items-center justify-center flex bg-preto">
-                        <Suspense fallback="Carregando vídeo...">
-                            <Video data-testid="atom-video" video={data.video.length > 0 ? data.video[0] : undefined} />
+                        <Suspense fallback="Carregando videos...">
+                            <BaseClientProvider render={providers.video} />
                         </Suspense>
                     </div>
                 )}
@@ -79,7 +75,7 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
                         data-testid="component-mapa"
                         className="size-full bg-azulFeio items-center justify-center flex"
                     >
-                        {'Mapa'}
+                        Mapa
                     </div>
                 )}
             </div>
