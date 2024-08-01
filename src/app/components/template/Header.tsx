@@ -1,18 +1,19 @@
 'use client';
 
 import { Suspense, useCallback, useState } from 'react';
-import MainMenu from '../organism/MainMenu';
-import Gallery from '../organism/Gallery';
-import Button from '../atoms/Button';
 
-import { GallerySchema } from '@/schema/GallerySchema';
+import Button from '../atoms/Button';
+import Menu from '../organism/Menu';
+
+import BaseClientProvider from '../BaseClientProvider';
 
 interface HeaderProps {
-    data: {
-        gallery: GallerySchema[];
+    providers: {
+        gallery: React.ReactNode;
+        video: React.ReactNode;
     };
 }
-const Header: React.FC<HeaderProps> = ({ data }) => {
+const Header: React.FC<HeaderProps> = ({ providers }) => {
     const [showComponent, setShowComponent] = useState({
         video: false,
         fotos: true,
@@ -52,18 +53,20 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
 
     return (
         <header className="relative" data-testid="header-template">
-            <MainMenu />
+            <Menu />
 
             <div className="w-full items-center flex mt-[4rem] h-[30rem]">
                 {showComponent.fotos && (
-                    <Suspense fallback="Carregando fotos...">
-                        <Gallery gallery={data.gallery && data.gallery[0]} />
+                    <Suspense fallback="Carregando galeria...">
+                        <BaseClientProvider render={providers.gallery} />
                     </Suspense>
                 )}
 
                 {showComponent.video && (
-                    <div data-testid="component-video" className="size-full items-center justify-center flex">
-                        {'Vídeo'}
+                    <div data-testid="component-video" className="size-full items-center justify-center flex bg-preto">
+                        <Suspense fallback="Carregando videos...">
+                            <BaseClientProvider render={providers.video} />
+                        </Suspense>
                     </div>
                 )}
 
@@ -72,12 +75,12 @@ const Header: React.FC<HeaderProps> = ({ data }) => {
                         data-testid="component-mapa"
                         className="size-full bg-azulFeio items-center justify-center flex"
                     >
-                        {'Mapa'}
+                        Mapa
                     </div>
                 )}
             </div>
 
-            <div className="container mx-auto py-medio px-medio flex overflow-x-auto gap-pequeno">
+            <div className="container mx-auto py-medio px-medio md:px-[0] flex overflow-x-auto gap-pequeno">
                 <Button
                     data-testid="btn-open-gallery"
                     onClick={handleShowFotos}

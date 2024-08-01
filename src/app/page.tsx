@@ -1,13 +1,17 @@
 import Header from './components/template/Header';
 
-import GalleryService from '@/services/GalleryService';
+import MainGallery from './providers/gallery/main-gallery/MainGallery';
+import MainVideo from './providers/video/main-video/MainVideo';
 
 export default async function Home() {
-    const mainGalleryImages = await GalleryService.getGallery('mainGallery');
-
     return (
         <>
-            <Header data={{ gallery: mainGalleryImages }} />
+            <Header
+                providers={{
+                    gallery: <MainGallery />,
+                    video: <MainVideo />,
+                }}
+            />
         </>
     );
 }

@@ -9,7 +9,7 @@ import Icon from '../atoms/Icon';
 
 type MenuBgColor = 'bg-azulForte' | 'bg-white';
 
-const MainMenu: React.FC = () => {
+const Menu: React.FC = () => {
     const [menuHasOpened, setMenuHasOpened] = useState(false);
     const [menuBgColor, setMenuBgColor] = useState<MenuBgColor>('bg-azulForte');
     const [menuIsOpen, setMenuIsOpen] = useState(false);
@@ -130,4 +130,4 @@ const MainMenu: React.FC = () => {
     );
 };
 
-export default MainMenu;
+export default Menu;

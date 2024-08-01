@@ -1,10 +1,27 @@
 import Header from '@/app/components/template/Header';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import mock_gallery from '../../../../__mocks__/app/components/organism/Gallery';
+import MainGallery from '@/app/providers/gallery/main-gallery/MainGallery';
+import MainVideo from '@/app/providers/video/main-video/MainVideo';
 
 describe('Dever renderizar o template Header', () => {
-    beforeEach(() => render(<Header data={{ gallery: mock_gallery }} />));
+    global.fetch = jest.fn().mockResolvedValue({
+        json: jest.fn().mockResolvedValue([]),
+    });
+
+    beforeEach(async () => {
+        const mainGallery = await MainGallery();
+        const mainVideo = await MainVideo();
+
+        return render(
+            <Header
+                providers={{
+                    gallery: mainGallery,
+                    video: mainVideo,
+                }}
+            />
+        );
+    });
 
     it('Deve renderizar o MainMenu', () => {
         const menu = screen.getByTestId('menu-principal');
@@ -18,9 +35,11 @@ describe('Dever renderizar o template Header', () => {
     });
 
     it('Deve ter pelo menos 3 fotos na tela', () => {
-        const fotos = screen.getAllByTestId('component-gallery-image');
+        waitFor(() => {
+            const fotos = screen.getAllByTestId('component-gallery-image');
 
-        expect(fotos.length).toBeGreaterThanOrEqual(3);
+            expect(fotos.length).toBeGreaterThanOrEqual(3);
+        });
     });
 
     describe('Deve renderizar os botôes', () => {
@@ -60,17 +79,59 @@ describe('Dever renderizar o template Header', () => {
             expect(mapa).not.toBeInTheDocument();
         });
 
-        it('Deve renderizar o component Vídeo ao clicar no botão "Vídeo"', () => {
-            const btnOpenVideo = screen.getByTestId('btn-open-video');
-            fireEvent.click(btnOpenVideo);
+        describe('Deve renderizar o component Vídeo ao clicar no botão "Vídeo"', () => {
+            it('Deve renderizar o Vídeo', () => {
+                const btnOpenVideo = screen.getByTestId('btn-open-video');
+                fireEvent.click(btnOpenVideo);
 
-            const video = screen.getByTestId('component-video');
-            const fotos = screen.queryByTestId('component-fotos');
-            const mapa = screen.queryByTestId('component-mapa');
+                const video = screen.getByTestId('component-video');
+                const fotos = screen.queryByTestId('component-fotos');
+                const mapa = screen.queryByTestId('component-mapa');
 
-            expect(video).toBeInTheDocument();
-            expect(fotos).not.toBeInTheDocument();
-            expect(mapa).not.toBeInTheDocument();
+                expect(video).toBeInTheDocument();
+                expect(fotos).not.toBeInTheDocument();
+                expect(mapa).not.toBeInTheDocument();
+            });
+
+            it('Deve ter o titulo do Vídeo', () => {
+                waitFor(() => {
+                    const btnOpenVideo = screen.getByTestId('btn-open-video');
+                    fireEvent.click(btnOpenVideo);
+
+                    const video = screen.getByTestId('component-video');
+                    const fotos = screen.queryByTestId('component-fotos');
+                    const mapa = screen.queryByTestId('component-mapa');
+
+                    expect(video).toBeInTheDocument();
+                    expect(fotos).not.toBeInTheDocument();
+                    expect(mapa).not.toBeInTheDocument();
+
+                    const iframe = screen.getByTestId('atom-video');
+
+                    expect(iframe).toBeInTheDocument();
+                    expect(iframe.getAttribute('title')).not.toBe('');
+                });
+            });
+
+            it('Deve ter o src do Vídeo', () => {
+                waitFor(() => {
+                    const btnOpenVideo = screen.getByTestId('btn-open-video');
+                    fireEvent.click(btnOpenVideo);
+
+                    const video = screen.getByTestId('component-video');
+                    const fotos = screen.queryByTestId('component-fotos');
+                    const mapa = screen.queryByTestId('component-mapa');
+
+                    expect(video).toBeInTheDocument();
+                    expect(fotos).not.toBeInTheDocument();
+                    expect(mapa).not.toBeInTheDocument();
+
+                    const iframe = screen.getByTestId('atom-video');
+
+                    expect(iframe).toBeInTheDocument();
+                    expect(iframe.getAttribute('src')).not.toBe('');
+                });
+            });
         });
 
         it('Deve renderizar o component Mapa ao clicar no botão "Mapa"', () => {

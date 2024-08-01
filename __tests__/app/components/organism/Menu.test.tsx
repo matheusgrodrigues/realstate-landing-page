@@ -1,8 +1,8 @@
 import { screen, render } from '@testing-library/react';
 
-import MainMenu from '../../../../src/app/components/organism/MainMenu';
+import MainMenu from '../../../../src/app/components/organism/Menu';
 
-describe('Deve renderizar o organism MainMenu', () => {
+describe('Deve renderizar o organism Menu', () => {
     beforeEach(() => render(<MainMenu />));
 
     it('Deve renderizar o botão de abrir o menu no Mobile', () => {

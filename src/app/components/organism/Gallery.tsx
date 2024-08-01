@@ -1,5 +1,7 @@
+'use client';
+
 import Image from 'next/image';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { SwiperSlide, useSwiper, Swiper } from 'swiper/react';
 import 'swiper/css';
@@ -7,7 +9,7 @@ import 'swiper/css';
 import Button from '../atoms/Button';
 import Icon from '../atoms/Icon';
 
-import { GallerySchema } from '@/schema/GallerySchema';
+import GallerySchema from '@/schema/GallerySchema';
 
 const NextPrevButton: React.FC = () => {
     const swiper = useSwiper();
@@ -54,7 +56,7 @@ interface GalleryProps {
 }
 
 const Gallery: React.NamedExoticComponent<GalleryProps> = memo(function Gallery({ gallery }) {
-    const images = gallery ? gallery.attributes.images.data : [];
+    const images = useMemo(() => (gallery ? gallery.attributes.images.data : []), [gallery]);
 
     return (
         <Swiper

@@ -36,7 +36,7 @@ interface GalleryImage {
     };
 }
 
-export interface GallerySchema {
+interface GallerySchema {
     id: number;
     attributes: {
         name: string;
@@ -48,3 +48,5 @@ export interface GallerySchema {
         };
     };
 }
+
+export default GallerySchema;
