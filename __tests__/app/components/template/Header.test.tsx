@@ -3,6 +3,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
 import MainGallery from '@/app/providers/gallery/main-gallery/MainGallery';
 import MainVideo from '@/app/providers/video/main-video/MainVideo';
+import MainMap from '@/app/providers/map/main-map/MainMap';
 
 describe('Dever renderizar o template Header', () => {
     global.fetch = jest.fn().mockResolvedValue({
@@ -12,12 +13,14 @@ describe('Dever renderizar o template Header', () => {
     beforeEach(async () => {
         const mainGallery = await MainGallery();
         const mainVideo = await MainVideo();
+        const mainMap = await MainMap();
 
         return render(
             <Header
                 providers={{
                     gallery: mainGallery,
                     video: mainVideo,
+                    mapa: mainMap,
                 }}
             />
         );
@@ -134,17 +137,59 @@ describe('Dever renderizar o template Header', () => {
             });
         });
 
-        it('Deve renderizar o component Mapa ao clicar no botão "Mapa"', () => {
-            const btnOpenMapa = screen.getByTestId('btn-open-mapa');
-            fireEvent.click(btnOpenMapa);
+        describe('Deve renderizar o component Mapa ao clicar no botão "Mapa"', () => {
+            it('Deve renderizar o Mapa', () => {
+                const btnOpenMapa = screen.getByTestId('btn-open-mapa');
+                fireEvent.click(btnOpenMapa);
 
-            const video = screen.queryByTestId('component-video');
-            const fotos = screen.queryByTestId('component-fotos');
-            const mapa = screen.getByTestId('component-mapa');
+                const video = screen.queryByTestId('component-video');
+                const fotos = screen.queryByTestId('component-fotos');
+                const mapa = screen.getByTestId('component-mapa');
 
-            expect(fotos).not.toBeInTheDocument();
-            expect(video).not.toBeInTheDocument();
-            expect(mapa).toBeInTheDocument();
+                expect(fotos).not.toBeInTheDocument();
+                expect(video).not.toBeInTheDocument();
+                expect(mapa).toBeInTheDocument();
+            });
+
+            it('Deve ter o titulo do Mapa', () => {
+                waitFor(() => {
+                    const btnOpenMapa = screen.getByTestId('btn-open-mapa');
+                    fireEvent.click(btnOpenMapa);
+
+                    const video = screen.queryByTestId('component-video');
+                    const fotos = screen.queryByTestId('component-fotos');
+                    const mapa = screen.getByTestId('component-mapa');
+
+                    expect(fotos).not.toBeInTheDocument();
+                    expect(video).not.toBeInTheDocument();
+                    expect(mapa).toBeInTheDocument();
+
+                    const iframe = screen.getByTestId('atom-map');
+
+                    expect(iframe).toBeInTheDocument();
+                    expect(iframe.getAttribute('title')).not.toBe('');
+                });
+            });
+
+            it('Deve ter o src do Vídeo', () => {
+                waitFor(() => {
+                    const btnOpenMapa = screen.getByTestId('btn-open-mapa');
+                    fireEvent.click(btnOpenMapa);
+
+                    const video = screen.queryByTestId('component-video');
+                    const fotos = screen.queryByTestId('component-fotos');
+                    const mapa = screen.getByTestId('component-mapa');
+
+                    expect(fotos).not.toBeInTheDocument();
+                    expect(video).not.toBeInTheDocument();
+                    expect(mapa).toBeInTheDocument();
+
+                    const iframe = screen.getByTestId('atom-map');
+
+                    expect(iframe).toBeInTheDocument();
+                    expect(iframe.getAttribute('src')).not.toBe('');
+                });
+            });
         });
     });
 });
