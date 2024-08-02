@@ -11,6 +11,7 @@ interface HeaderProps {
     providers: {
         gallery: React.ReactNode;
         video: React.ReactNode;
+        mapa: React.ReactNode;
     };
 }
 const Header: React.FC<HeaderProps> = ({ providers }) => {
@@ -75,7 +76,9 @@ const Header: React.FC<HeaderProps> = ({ providers }) => {
                         data-testid="component-mapa"
                         className="size-full bg-azulFeio items-center justify-center flex"
                     >
-                        Mapa
+                        <Suspense fallback="Carregando mapa...">
+                            <BaseClientProvider render={providers.mapa} />
+                        </Suspense>
                     </div>
                 )}
             </div>

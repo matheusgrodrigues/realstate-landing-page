@@ -7,6 +7,5 @@ body {
     scroll-behavior: smooth;
     background: white;
     overflow-x: hidden;
-    min-height: 200vh;
     color: black;
 }
