@@ -5,7 +5,7 @@ import { Suspense, useCallback, useState } from 'react';
 import Button from '../atoms/Button';
 import Menu from '../organism/Menu';
 
-import BaseClientProvider from '../BaseClientProvider';
+import BaseClientProvider from '../base/BaseClientProvider';
 
 interface HeaderProps {
     providers: {

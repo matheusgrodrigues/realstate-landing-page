@@ -3,7 +3,7 @@ import { HTMLAttributes } from 'react';
 interface ParagraphProps extends React.DetailedHTMLProps<HTMLAttributes<HTMLParagraphElement>, HTMLParagraphElement> {
     children: React.ReactNode;
     config: {
-        textTransform: 'uppercase';
+        textTransform: 'uppercase' | 'capitalize' | 'lowercase';
         fontSize: 'text-medio';
         color: 'text-preto2';
         customClassName?: string;

@@ -4,8 +4,6 @@ interface ClientProviderProps {
     render: React.ReactNode;
 }
 
-const BaseClientProvider: React.FC<ClientProviderProps> = ({ render }) => {
-    return <>{render}</>;
-};
+const BaseClientProvider: React.FC<ClientProviderProps> = ({ render }) => <>{render}</>;
 
 export default BaseClientProvider;
