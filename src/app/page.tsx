@@ -1,3 +1,4 @@
+import Description from './components/template/Description';
 import Header from './components/template/Header';
 
 import MainGallery from './providers/gallery/main-gallery/MainGallery';
@@ -14,6 +15,8 @@ export default async function Home() {
                     mapa: <MainMap />,
                 }}
             />
+
+            <Description />
         </>
     );
 }

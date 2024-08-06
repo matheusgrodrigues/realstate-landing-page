@@ -1,46 +1,120 @@
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 
-import { BuildingLibraryIcon, ArrowRightIcon, ArrowLeftIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
+import {
+    ChatBubbleBottomCenterIcon,
+    BuildingLibraryIcon,
+    RectangleGroupIcon,
+    Square3Stack3DIcon,
+    PuzzlePieceIcon,
+    ArrowRightIcon,
+    HomeModernIcon,
+    ArrowLeftIcon,
+    MapPinIcon,
+    Bars3Icon,
+    XMarkIcon,
+    TruckIcon,
+    PhoneIcon,
+} from '@heroicons/react/24/outline';
+
+type Color = 'text-pretoForte' | 'text-vermelho' | 'text-white';
+
+export type IconType =
+    | 'chat-bubble-bottom-center'
+    | 'square-3-stack-3d'
+    | 'building-library'
+    | 'retangle-group'
+    | 'puzzle-piece'
+    | 'home-modern'
+    | 'arrow-right'
+    | 'arrow-left'
+    | 'map-pin'
+    | 'bars-3'
+    | 'x-icon'
+    | 'truck'
+    | 'phone';
+
+type Size = 'size-pequeno' | 'size-medio';
 
 type IconProps = Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'className'> & {
     titleId?: string;
     title?: string;
     config: {
-        color: 'text-white' | 'text-pretoForte';
-        icon: 'building-library' | 'arrow-left' | 'arrow-right' | 'bars-3' | 'x-icon';
+        color: Color;
+        icon: IconType;
+        size?: Size;
         customClassName?: string;
     };
 };
 
 const Icon: React.ForwardRefRenderFunction<SVGSVGElement, IconProps> = ({ config, ...props }, ref) => {
-    const { customClassName, color, icon } = useMemo(() => config, [config]);
+    const { customClassName, color, icon, size } = useMemo(() => config, [config]);
 
-    const getColor = useMemo(
-        () => (color === 'text-white' ? 'text-white' : color === 'text-pretoForte' ? 'text-pretoForte' : ''),
-        [color]
-    );
+    const getSize = useCallback(() => {
+        if (size === 'size-pequeno') {
+            return 'min-w-[12px] max-w-[12px]';
+        } else if (size === 'size-medio') {
+            return 'min-w-[20px] max-w-[20px]';
+        }
+
+        return 'min-w-[32px] max-w-[32px]';
+    }, [size]);
 
     return (
         <>
-            {icon === 'building-library' && (
-                <BuildingLibraryIcon
-                    data-testid="logo"
-                    className={`${getColor} w-[2rem] ${customClassName}`}
+            {icon === 'chat-bubble-bottom-center' && (
+                <ChatBubbleBottomCenterIcon
+                    className={`${color} ${getSize()} ${customClassName}`}
                     ref={ref}
                     {...props}
                 />
             )}
+
+            {icon === 'square-3-stack-3d' && (
+                <Square3Stack3DIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
+            {icon === 'building-library' && (
+                <BuildingLibraryIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
+            {icon === 'retangle-group' && (
+                <RectangleGroupIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
+            {icon === 'puzzle-piece' && (
+                <PuzzlePieceIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
             {icon === 'arrow-right' && (
-                <ArrowRightIcon className={`${getColor} w-[2rem] ${customClassName}`} ref={ref} {...props} />
+                <ArrowRightIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
             )}
+
+            {icon === 'home-modern' && (
+                <HomeModernIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
             {icon === 'arrow-left' && (
-                <ArrowLeftIcon className={`${getColor} w-[2rem] ${customClassName}`} ref={ref} {...props} />
+                <ArrowLeftIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
             )}
+
+            {icon === 'map-pin' && (
+                <MapPinIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
             {icon === 'x-icon' && (
-                <XMarkIcon className={`${getColor} w-[2rem] ${customClassName}`} ref={ref} {...props} />
+                <XMarkIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
             )}
+
             {icon === 'bars-3' && (
-                <Bars3Icon className={`${getColor} w-[2rem] ${customClassName}`} ref={ref} {...props} />
+                <Bars3Icon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
+            {icon === 'truck' && (
+                <TruckIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
+            {icon === 'phone' && (
+                <PhoneIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
             )}
         </>
     );

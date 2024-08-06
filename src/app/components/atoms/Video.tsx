@@ -10,11 +10,10 @@ const Video: React.FC<VideoProps> = ({ video, ...props }) => {
         <>
             {video && (
                 <iframe
+                    className="size-full aspect-video"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
                     frameBorder="0"
-                    height="100%"
-                    width="100%"
                     title={video.attributes.titulo}
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     src={`${video.attributes.url}&controls=0&rel=0`}

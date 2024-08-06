@@ -18,6 +18,7 @@ const config: Config = {
             bold: '700',
         },
         fontSize: {
+            extraMedio: '1.25rem',
             pequeno2: '0.75rem',
             pequeno: '0.875rem',
             grande: '1.65rem',
@@ -35,6 +36,7 @@ const config: Config = {
             transparent: 'transparent',
             pretoForte: '#151a21',
             azulForte2: '#284eaf',
+            azulClaro: '#0c91e5',
             azulForte: '#0c1e4b',
             azulFeio: '#03f5ff',
             vermelho: '#980a08',

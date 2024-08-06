@@ -13,8 +13,7 @@ describe('Deve renderizar o Video corretamente', () => {
         const video = screen.getByTestId('atom-video');
 
         expect(video).toBeInTheDocument();
-        expect(video).toHaveAttribute('height', '100%');
-        expect(video).toHaveAttribute('width', '100%');
+        expect(video.classList.contains('size-full')).toBe(true);
     });
 
     it('Deve ter o frameborder = 0', () => {
