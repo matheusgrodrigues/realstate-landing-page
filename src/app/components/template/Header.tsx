@@ -72,10 +72,7 @@ const Header: React.FC<HeaderProps> = ({ providers }) => {
                 )}
 
                 {showComponent.mapa && (
-                    <div
-                        data-testid="component-mapa"
-                        className="size-full bg-azulFeio items-center justify-center flex"
-                    >
+                    <div data-testid="component-mapa" className="size-full items-center justify-center flex">
                         <Suspense fallback="Carregando mapa...">
                             <BaseClientProvider render={providers.mapa} />
                         </Suspense>
@@ -83,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ providers }) => {
                 )}
             </div>
 
-            <div className="container mx-auto py-medio px-medio md:px-[0] flex overflow-x-auto gap-pequeno">
+            <div className="container max-w-[1080px] mx-auto py-medio px-medio md:px-[0] flex overflow-x-auto gap-pequeno">
                 <Button
                     data-testid="btn-open-gallery"
                     onClick={handleShowFotos}

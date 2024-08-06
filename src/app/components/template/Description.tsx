@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import Paragraph from '../atoms/Paragraph';
 import Icon, { IconType } from '../atoms/Icon';
+import Button from '../atoms/Button';
 
 const diferenciais: Array<{
     id: number;
@@ -146,7 +147,27 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
 
 interface DescriptionRightSideProps extends DescriptionProps {}
 
-const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }) => <></>;
+const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }) => (
+    <div className="w-full max-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio">
+        <div data-testid="description-logo">LOGO</div>
+
+        <h4 data-testid="description-texto-parcela">
+            Parcelas a partir de <strong>R$ 400</strong>,00
+        </h4>
+
+        <div className="flex flex-col items-center">
+            <Icon
+                config={{
+                    icon: 'arrow-left',
+                    color: 'text-vermelho',
+                }}
+            />
+            <span>(011) 2643-5036</span>
+        </div>
+
+        <Button>Receba uma apresentação</Button>
+    </div>
+);
 
 interface DescriptionProps {
     providers?: {
@@ -161,7 +182,7 @@ interface DescriptionProps {
 }
 
 const Description: React.FC<DescriptionProps> = ({ providers }) => (
-    <div className="container mx-auto py-medio px-medio md:px-[0]">
+    <div className="container max-w-[1080px] mx-auto py-medio px-medio md:px-[0] flex justify-between">
         <DescriptionLeftSide />
         <DescriptionRightSide />
     </div>
