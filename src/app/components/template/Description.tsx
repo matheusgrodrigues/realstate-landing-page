@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { HTMLAttributes, useCallback, useState } from 'react';
 import Link from 'next/link';
 
 import Paragraph from '../atoms/Paragraph';
@@ -151,6 +151,25 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
     </div>
 );
 
+interface HeadingProps extends React.DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement> {
+    children: React.ReactNode;
+    config: {
+        variant: 'h4';
+    };
+}
+
+const Heading: React.FC<HeadingProps> = ({ children, config, ...props }) => {
+    return (
+        <>
+            {config.variant === 'h4' && (
+                <h4 className="text-extraMedio" {...props}>
+                    {children}
+                </h4>
+            )}
+        </>
+    );
+};
+
 interface DescriptionRightSideProps extends DescriptionProps {}
 
 const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }) => {
@@ -170,9 +189,14 @@ const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }
                 LOGO
             </div>
 
-            <h4 data-testid="description-card-texto-parcela" className="text-extraMedio">
+            <Heading
+                data-testid="description-card-texto-parcela"
+                config={{
+                    variant: 'h4',
+                }}
+            >
                 Parcelas a partir de <strong className="text-extraMedio font-extraBold">R$ 400</strong>,00
-            </h4>
+            </Heading>
 
             <div className="flex flex-col items-center gap-[6px]">
                 <Icon
