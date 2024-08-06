@@ -1,9 +1,11 @@
-import React from 'react';
+'use client';
+
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 
 import Paragraph from '../atoms/Paragraph';
-import Icon, { IconType } from '../atoms/Icon';
 import Button from '../atoms/Button';
+import Icon, { IconType } from '../atoms/Icon';
 
 const diferenciais: Array<{
     id: number;
@@ -91,19 +93,24 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
         <Paragraph
             data-testid="description-emp-descricao"
             config={{
-                textTransform: 'lowercase',
                 fontSize: 'text-medio',
                 color: 'text-preto2',
             }}
         >
-            <strong>
-                O lançamento mais aguardado da <strong data-testid="description-emp-descricao-bairro">LAPA</strong>{' '}
-                chegou!{' '}
+            <strong className="lowercase me-[3px]">
+                <span className="me-[3px]">O lançamento mais aguardado da</span>
+                <strong data-testid="description-emp-descricao-bairro" className="me-[3px]">
+                    LAPA
+                </strong>
+                chegou!
             </strong>
-            Produto incomparável em um dos bairros mais tradicionais da capital. O fluxo de pagamento está excelente e
-            comprar na planta é o melhor negócio.{' '}
+            <span className="lowercase">
+                Produto incomparável em um dos bairros mais tradicionais da capital. O fluxo de pagamento está excelente
+                e comprar na planta é o melhor negócio.
+            </span>
             <Link
                 data-testid="description-emp-descricao-link"
+                className="text-vermelho underline mx-[3px]"
                 href={{
                     pathname: '/',
                 }}
@@ -115,7 +122,7 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
 
         <ul
             data-testid="description-emp-diferenciais"
-            className="flex flex-col md:flex-row md:flex-wrap gap-medio mt-pequeno"
+            className="flex flex-col lg:flex-row md:flex-wrap gap-medio mt-pequeno"
         >
             {diferenciais.map((dif) => (
                 <li className="w-1/3" data-testid="description-emp-diferenciais-item" key={dif.id}>
@@ -147,38 +154,61 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
 
 interface DescriptionRightSideProps extends DescriptionProps {}
 
-const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }) => (
-    <div
-        data-testid="description-card"
-        className="w-full max-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio"
-    >
-        <div data-testid="description-card-logo">LOGO</div>
+const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }) => {
+    const [showPhone, setShowPhone] = useState(false);
 
-        <h4 data-testid="description-card-texto-parcela">
-            Parcelas a partir de <strong>R$ 400</strong>,00
-        </h4>
+    const handleShowPhone = useCallback(() => setShowPhone((prev) => !prev), []);
 
-        <div className="flex flex-col items-center">
-            <Icon
-                data-testid="description-card-icon-phone"
-                config={{
-                    icon: 'arrow-left',
-                    color: 'text-vermelho',
-                }}
-            />
-            <span data-testid="description-card-phone">(011) 2643-5036</span>
-        </div>
-
-        <Button
-            data-testid="description-card-button"
-            config={{
-                variant: 'default',
-            }}
+    return (
+        <div
+            data-testid="description-card"
+            className="min-w-[320px] max-w-[355px] md:min-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio flex flex-col gap-extraMedio items-center relative"
         >
-            Receba uma apresentação
-        </Button>
-    </div>
-);
+            <div
+                data-testid="description-card-logo"
+                className="bg-cinza w-full h-[160px] flex justify-center items-center"
+            >
+                LOGO
+            </div>
+
+            <h4 data-testid="description-card-texto-parcela" className="text-extraMedio">
+                Parcelas a partir de <strong className="text-extraMedio font-extraBold">R$ 400</strong>,00
+            </h4>
+
+            <div className="flex flex-col items-center gap-[6px]">
+                <Icon
+                    data-testid="description-card-icon-phone"
+                    onClick={handleShowPhone}
+                    config={{
+                        customClassName: 'cursor-pointer',
+                        color: 'text-vermelho',
+                        icon: 'phone',
+                    }}
+                />
+                <span data-testid="description-card-phone" className="text-pequeno">
+                    (011) 2643-{showPhone ? '5036' : '****'}
+                </span>
+            </div>
+
+            <Button
+                data-testid="description-card-button"
+                config={{
+                    customClassName: 'absolute bottom-[-20px] flex items-center gap-[6px]',
+                    variant: 'azul-claro',
+                }}
+            >
+                <Icon
+                    config={{
+                        color: 'text-white',
+                        icon: 'chat-bubble-bottom-center',
+                        size: 'size-medio',
+                    }}
+                />
+                Receba uma apresentação
+            </Button>
+        </div>
+    );
+};
 
 interface DescriptionProps {
     providers?: {
@@ -193,9 +223,9 @@ interface DescriptionProps {
 }
 
 const Description: React.FC<DescriptionProps> = ({ providers }) => (
-    <div className="container max-w-[1080px] mx-auto py-medio px-medio md:px-[0] flex justify-between">
-        <DescriptionLeftSide />
-        <DescriptionRightSide />
+    <div className="container max-w-[1080px] mx-auto py-medio px-medio flex flex-col items-center gap-grande lg:gap-[0] md:flex-row lg:justify-between">
+        <DescriptionLeftSide providers={providers} />
+        <DescriptionRightSide providers={providers} />
     </div>
 );
 

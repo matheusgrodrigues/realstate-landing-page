@@ -12,11 +12,14 @@ import {
     Bars3Icon,
     XMarkIcon,
     TruckIcon,
+    PhoneIcon,
+    ChatBubbleBottomCenterIcon,
 } from '@heroicons/react/24/solid';
 
 type Color = 'text-pretoForte' | 'text-vermelho' | 'text-white';
 
 export type IconType =
+    | 'chat-bubble-bottom-center'
     | 'square-3-stack-3d'
     | 'building-library'
     | 'retangle-group'
@@ -27,7 +30,8 @@ export type IconType =
     | 'map-pin'
     | 'bars-3'
     | 'x-icon'
-    | 'truck';
+    | 'truck'
+    | 'phone';
 
 type Size = 'size-pequeno' | 'size-medio';
 
@@ -57,6 +61,14 @@ const Icon: React.ForwardRefRenderFunction<SVGSVGElement, IconProps> = ({ config
 
     return (
         <>
+            {icon === 'chat-bubble-bottom-center' && (
+                <ChatBubbleBottomCenterIcon
+                    className={`${color} ${getSize()} ${customClassName}`}
+                    ref={ref}
+                    {...props}
+                />
+            )}
+
             {icon === 'square-3-stack-3d' && (
                 <Square3Stack3DIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
             )}
@@ -99,6 +111,10 @@ const Icon: React.ForwardRefRenderFunction<SVGSVGElement, IconProps> = ({ config
 
             {icon === 'truck' && (
                 <TruckIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
+            )}
+
+            {icon === 'phone' && (
+                <PhoneIcon className={`${color} ${getSize()} ${customClassName}`} ref={ref} {...props} />
             )}
         </>
     );

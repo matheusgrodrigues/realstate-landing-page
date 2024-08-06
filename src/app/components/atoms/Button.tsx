@@ -5,7 +5,7 @@ interface ButtonProps
     children: React.ReactNode;
     config: {
         customClassName?: string | undefined;
-        variant?: 'default';
+        variant?: 'default' | 'azul-claro';
         active?: boolean;
     };
 }
@@ -13,14 +13,25 @@ interface ButtonProps
 const Button: React.FC<ButtonProps> = ({ children, config, ...props }) => {
     return (
         <>
-            {config.variant === 'default' ? (
+            {config.variant === 'default' && (
                 <button
                     className={`${config.active ? 'bg-azulForte text-white' : 'text-cinza hover:text-white bg-white2 hover:bg-cinza ease-in-out duration-200'} font-bold px-extraMedio h-[3rem] rounded-md ${config.customClassName}`}
                     {...props}
                 >
                     {children}
                 </button>
-            ) : (
+            )}
+
+            {config.variant === 'azul-claro' && (
+                <button
+                    className={`${config.active ? 'bg-azulClaro text-white' : 'text-white hover:text-white bg-azulClaro hover:bg-azulForte2 ease-in-out duration-200'} font-bold px-extraMedio h-[3rem] rounded-md ${config.customClassName}`}
+                    {...props}
+                >
+                    {children}
+                </button>
+            )}
+
+            {!config.variant && (
                 <button className={`${config.customClassName}`} {...props}>
                     {children}
                 </button>

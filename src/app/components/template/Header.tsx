@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ providers }) => {
                 )}
             </div>
 
-            <div className="container max-w-[1080px] mx-auto py-medio px-medio md:px-[0] flex overflow-x-auto gap-pequeno">
+            <div className="container max-w-[1080px] mx-auto py-medio px-medio lg:px-[0] flex overflow-x-auto gap-pequeno">
                 <Button
                     data-testid="btn-open-gallery"
                     onClick={handleShowFotos}
