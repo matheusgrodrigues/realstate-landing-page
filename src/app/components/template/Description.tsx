@@ -115,9 +115,8 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
                     pathname: '/',
                 }}
             >
-                Solicite uma proposta
+                Solicite uma proposta.
             </Link>
-            .
         </Paragraph>
 
         <ul
@@ -162,7 +161,7 @@ const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }
     return (
         <div
             data-testid="description-card"
-            className="min-w-[320px] max-w-[355px] md:min-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio flex flex-col gap-extraMedio items-center relative"
+            className="min-w-[320px] max-w-[355px] md:min-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio flex flex-col gap-extraMedio items-center relative md:top-[-120px] lg:absolute lg:top-[-100px] right-[0] bg-white2 z-30"
         >
             <div
                 data-testid="description-card-logo"
@@ -223,7 +222,7 @@ interface DescriptionProps {
 }
 
 const Description: React.FC<DescriptionProps> = ({ providers }) => (
-    <div className="container max-w-[1080px] mx-auto py-medio px-medio flex flex-col items-center gap-grande lg:gap-[0] md:flex-row lg:justify-between">
+    <div className="container max-w-[1080px] mx-auto py-medio px-medio xl:px-[0] flex flex-col items-center gap-grande lg:gap-[0] md:flex-row lg:justify-between relative">
         <DescriptionLeftSide providers={providers} />
         <DescriptionRightSide providers={providers} />
     </div>

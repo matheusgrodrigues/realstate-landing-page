@@ -1,6 +1,7 @@
 import { forwardRef, useCallback, useMemo } from 'react';
 
 import {
+    ChatBubbleBottomCenterIcon,
     BuildingLibraryIcon,
     RectangleGroupIcon,
     Square3Stack3DIcon,
@@ -13,8 +14,7 @@ import {
     XMarkIcon,
     TruckIcon,
     PhoneIcon,
-    ChatBubbleBottomCenterIcon,
-} from '@heroicons/react/24/solid';
+} from '@heroicons/react/24/outline';
 
 type Color = 'text-pretoForte' | 'text-vermelho' | 'text-white';
 
