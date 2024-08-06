@@ -1,7 +1,49 @@
 import React from 'react';
 import Paragraph from '../atoms/Paragraph';
-import Icon from '../atoms/Icon';
+import Icon, { IconType } from '../atoms/Icon';
 import Link from 'next/link';
+
+const diferenciais: Array<{
+    id: number;
+    icon: IconType;
+    text: {
+        highlight: string;
+        text: string;
+    };
+}> = [
+    {
+        id: 1,
+        icon: 'truck',
+        text: {
+            highlight: '2 e 3',
+            text: 'Dormitórios',
+        },
+    },
+    {
+        id: 2,
+        icon: 'retangle-group',
+        text: {
+            highlight: 'Clube',
+            text: 'Condomínio',
+        },
+    },
+    {
+        id: 3,
+        icon: 'square-3-stack-3d',
+        text: {
+            highlight: 'Vaga',
+            text: 'na garagem',
+        },
+    },
+    {
+        id: 4,
+        icon: 'puzzle-piece',
+        text: {
+            highlight: '4',
+            text: 'Elevadores por torre',
+        },
+    },
+];
 
 interface DescriptionProps {
     providers?: {
@@ -85,94 +127,32 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                     data-testid="description-emp-diferenciais"
                     className="flex flex-col md:flex-row md:flex-wrap gap-medio mt-pequeno"
                 >
-                    <li className="w-1/3" data-testid="description-emp-diferenciais-item">
-                        <Paragraph
-                            config={{
-                                customClassName: 'flex items-center text-nowrap',
-                                textTransform: 'lowercase',
-                                fontSize: 'text-medio',
-                                color: 'text-preto2',
-                            }}
-                        >
-                            <Icon
-                                config={{
-                                    customClassName: 'w-auto',
-                                    color: 'text-vermelho',
-                                    icon: 'truck',
-                                    size: 'size-medio',
-                                }}
-                            />
-                            <span className="mx-[3px]">
-                                <strong>2 e 3</strong> Dormitórios.
-                            </span>
-                        </Paragraph>
-                    </li>
-                    <li className="w-1/3" data-testid="description-emp-diferenciais-item">
-                        <Paragraph
-                            config={{
-                                customClassName: 'flex items-center text-nowrap',
-                                textTransform: 'lowercase',
-                                fontSize: 'text-medio',
-                                color: 'text-preto2',
-                            }}
-                        >
-                            <Icon
-                                config={{
-                                    customClassName: 'w-auto',
-                                    color: 'text-vermelho',
-                                    icon: 'retangle-group',
-                                    size: 'size-medio',
-                                }}
-                            />
-                            <span className="mx-[3px]">
-                                Condonínio <strong>Clube</strong>
-                            </span>
-                        </Paragraph>
-                    </li>
-                    <li className="w-1/3" data-testid="description-emp-diferenciais-item">
-                        <Paragraph
-                            config={{
-                                customClassName: 'flex items-center text-nowrap',
-                                textTransform: 'lowercase',
-                                fontSize: 'text-medio',
-                                color: 'text-preto2',
-                            }}
-                        >
-                            <Icon
-                                config={{
-                                    customClassName: 'w-auto',
-                                    color: 'text-vermelho',
-                                    icon: 'square-3-stack-3d',
-                                    size: 'size-medio',
-                                }}
-                            />
-                            <span className="mx-[3px]">
-                                Opção de <strong>Vaga</strong>
-                            </span>
-                        </Paragraph>
-                    </li>
-                    <li className="w-1/3" data-testid="description-emp-diferenciais-item">
-                        <Paragraph
-                            config={{
-                                customClassName: 'flex items-center text-nowrap',
-                                textTransform: 'lowercase',
-                                fontSize: 'text-medio',
-                                color: 'text-preto2',
-                            }}
-                        >
-                            <Icon
-                                config={{
-                                    customClassName: 'w-auto',
-                                    color: 'text-vermelho',
-                                    icon: 'puzzle-piece',
-                                    size: 'size-medio',
-                                }}
-                            />
-                            <span className="mx-[3px]">
-                                <strong>4</strong> elevadores por torre
-                            </span>
-                        </Paragraph>
-                    </li>
+                    {diferenciais.map((dif) => {
+                        return (
+                            <li className="w-1/3" data-testid="description-emp-diferenciais-item" key={dif.id}>
+                                <Paragraph
+                                    config={{
+                                        customClassName: 'flex items-center text-nowrap',
+                                        textTransform: 'lowercase',
+                                        fontSize: 'text-medio',
+                                        color: 'text-preto2',
+                                    }}
+                                >
+                                    <Icon
+                                        config={{
+                                            customClassName: 'w-auto',
+                                            color: 'text-vermelho',
+                                            icon: dif.icon,
+                                            size: 'size-medio',
+                                        }}
+                                    />
+                                    <span className="mx-[3px]">
+                                        <strong>{dif.text.highlight}</strong> {dif.text.text}
+                                    </span>
+                                </Paragraph>
+                            </li>
+                        );
+                    })}
                 </ul>
             </div>
         </div>

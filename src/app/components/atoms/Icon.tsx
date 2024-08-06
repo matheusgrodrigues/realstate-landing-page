@@ -16,7 +16,7 @@ import {
 
 type Color = 'text-pretoForte' | 'text-vermelho' | 'text-white';
 
-type Icon =
+export type IconType =
     | 'square-3-stack-3d'
     | 'building-library'
     | 'retangle-group'
@@ -36,7 +36,7 @@ type IconProps = Omit<React.SVGProps<SVGSVGElement>, 'ref' | 'className'> & {
     title?: string;
     config: {
         color: Color;
-        icon: Icon;
+        icon: IconType;
         size?: Size;
         customClassName?: string;
     };
