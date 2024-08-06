@@ -148,24 +148,35 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
 interface DescriptionRightSideProps extends DescriptionProps {}
 
 const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }) => (
-    <div className="w-full max-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio">
-        <div data-testid="description-logo">LOGO</div>
+    <div
+        data-testid="description-card"
+        className="w-full max-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio"
+    >
+        <div data-testid="description-card-logo">LOGO</div>
 
-        <h4 data-testid="description-texto-parcela">
+        <h4 data-testid="description-card-texto-parcela">
             Parcelas a partir de <strong>R$ 400</strong>,00
         </h4>
 
         <div className="flex flex-col items-center">
             <Icon
+                data-testid="description-card-icon-phone"
                 config={{
                     icon: 'arrow-left',
                     color: 'text-vermelho',
                 }}
             />
-            <span>(011) 2643-5036</span>
+            <span data-testid="description-card-phone">(011) 2643-5036</span>
         </div>
 
-        <Button>Receba uma apresentação</Button>
+        <Button
+            data-testid="description-card-button"
+            config={{
+                variant: 'default',
+            }}
+        >
+            Receba uma apresentação
+        </Button>
     </div>
 );
 
