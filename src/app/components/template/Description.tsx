@@ -97,7 +97,7 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                                 config={{
                                     customClassName: 'w-auto',
                                     color: 'text-vermelho',
-                                    icon: 'map-pin',
+                                    icon: 'truck',
                                     size: 'size-medio',
                                 }}
                             />
@@ -119,12 +119,34 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                                 config={{
                                     customClassName: 'w-auto',
                                     color: 'text-vermelho',
-                                    icon: 'map-pin',
+                                    icon: 'retangle-group',
                                     size: 'size-medio',
                                 }}
                             />
                             <span className="mx-[3px]">
-                                <strong>2 e 3</strong> Dormitórios.
+                                Condonínio <strong>Clube</strong>
+                            </span>
+                        </Paragraph>
+                    </li>
+                    <li className="w-1/3" data-testid="description-emp-diferenciais-item">
+                        <Paragraph
+                            config={{
+                                customClassName: 'flex items-center',
+                                textTransform: 'lowercase',
+                                fontSize: 'text-medio',
+                                color: 'text-preto2',
+                            }}
+                        >
+                            <Icon
+                                config={{
+                                    customClassName: 'w-auto',
+                                    color: 'text-vermelho',
+                                    icon: 'square-3-stack-3d',
+                                    size: 'size-medio',
+                                }}
+                            />
+                            <span className="mx-[3px]">
+                                Opção de <strong>Vaga</strong>
                             </span>
                         </Paragraph>
                     </li>
@@ -146,29 +168,7 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                                 }}
                             />
                             <span className="mx-[3px]">
-                                <strong>2 e 3</strong> Dormitórios.
-                            </span>
-                        </Paragraph>
-                    </li>
-                    <li className="w-1/3" data-testid="description-emp-diferenciais-item">
-                        <Paragraph
-                            config={{
-                                customClassName: 'flex items-center',
-                                textTransform: 'lowercase',
-                                fontSize: 'text-medio',
-                                color: 'text-preto2',
-                            }}
-                        >
-                            <Icon
-                                config={{
-                                    customClassName: 'w-auto',
-                                    color: 'text-vermelho',
-                                    icon: 'map-pin',
-                                    size: 'size-medio',
-                                }}
-                            />
-                            <span className="mx-[3px]">
-                                <strong>2 e 3</strong> Dormitórios.
+                                <strong>4</strong> elevadores por torre
                             </span>
                         </Paragraph>
                     </li>
