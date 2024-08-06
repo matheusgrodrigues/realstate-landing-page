@@ -17,7 +17,7 @@ interface DescriptionProps {
 
 const Description: React.FC<DescriptionProps> = ({ providers }) => {
     return (
-        <div className="container mx-auto">
+        <div className="container mx-auto py-medio px-medio md:px-[0]">
             <div className="flex flex-col max-w-[634px] gap-medio">
                 <Paragraph
                     config={{
@@ -45,7 +45,6 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                     <Icon
                         data-testid="description-endereco-emp-icon"
                         config={{
-                            customClassName: 'w-auto',
                             color: 'text-vermelho',
                             icon: 'map-pin',
                             size: 'size-medio',
@@ -82,12 +81,14 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                     .
                 </Paragraph>
 
-                {/* TODO: Ajustar os icones de diferenciais com icones que fazem sentido. */}
-                <ul data-testid="description-emp-diferenciais" className="flex gap-grande flex-wrap">
+                <ul
+                    data-testid="description-emp-diferenciais"
+                    className="flex flex-col md:flex-row md:flex-wrap gap-medio mt-pequeno"
+                >
                     <li className="w-1/3" data-testid="description-emp-diferenciais-item">
                         <Paragraph
                             config={{
-                                customClassName: 'flex items-center',
+                                customClassName: 'flex items-center text-nowrap',
                                 textTransform: 'lowercase',
                                 fontSize: 'text-medio',
                                 color: 'text-preto2',
@@ -109,7 +110,7 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                     <li className="w-1/3" data-testid="description-emp-diferenciais-item">
                         <Paragraph
                             config={{
-                                customClassName: 'flex items-center',
+                                customClassName: 'flex items-center text-nowrap',
                                 textTransform: 'lowercase',
                                 fontSize: 'text-medio',
                                 color: 'text-preto2',
@@ -131,7 +132,7 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                     <li className="w-1/3" data-testid="description-emp-diferenciais-item">
                         <Paragraph
                             config={{
-                                customClassName: 'flex items-center',
+                                customClassName: 'flex items-center text-nowrap',
                                 textTransform: 'lowercase',
                                 fontSize: 'text-medio',
                                 color: 'text-preto2',
@@ -153,7 +154,7 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                     <li className="w-1/3" data-testid="description-emp-diferenciais-item">
                         <Paragraph
                             config={{
-                                customClassName: 'flex items-center',
+                                customClassName: 'flex items-center text-nowrap',
                                 textTransform: 'lowercase',
                                 fontSize: 'text-medio',
                                 color: 'text-preto2',
@@ -163,7 +164,7 @@ const Description: React.FC<DescriptionProps> = ({ providers }) => {
                                 config={{
                                     customClassName: 'w-auto',
                                     color: 'text-vermelho',
-                                    icon: 'map-pin',
+                                    icon: 'puzzle-piece',
                                     size: 'size-medio',
                                 }}
                             />
