@@ -1,9 +1,10 @@
 'use client';
 
-import React, { HTMLAttributes, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
 
 import Paragraph from '../atoms/Paragraph';
+import Heading from '../atoms/Heading';
 import Button from '../atoms/Button';
 import Icon, { IconType } from '../atoms/Icon';
 
@@ -150,25 +151,6 @@ const DescriptionLeftSide: React.FC<DescriptionLeftSideProps> = ({ providers }) 
         </ul>
     </div>
 );
-
-interface HeadingProps extends React.DetailedHTMLProps<HTMLAttributes<HTMLHeadingElement>, HTMLHeadingElement> {
-    children: React.ReactNode;
-    config: {
-        variant: 'h4';
-    };
-}
-
-const Heading: React.FC<HeadingProps> = ({ children, config, ...props }) => {
-    return (
-        <>
-            {config.variant === 'h4' && (
-                <h4 className="text-extraMedio" {...props}>
-                    {children}
-                </h4>
-            )}
-        </>
-    );
-};
 
 interface DescriptionRightSideProps extends DescriptionProps {}
 
