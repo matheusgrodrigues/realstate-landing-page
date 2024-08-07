@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 
 import Paragraph from '../atoms/Paragraph';
 import Heading from '../atoms/Heading';
 import Button from '../atoms/Button';
 import Icon, { IconType } from '../atoms/Icon';
+import debounce from '@/app/lib/util/debounce';
 
 const diferenciais: Array<{
     id: number;
@@ -157,12 +158,45 @@ interface DescriptionRightSideProps extends DescriptionProps {}
 const DescriptionRightSide: React.FC<DescriptionRightSideProps> = ({ providers }) => {
     const [showPhone, setShowPhone] = useState(false);
 
+    const descriptionCardRef = useRef<HTMLDivElement>(null);
+
     const handleShowPhone = useCallback(() => setShowPhone((prev) => !prev), []);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.matchMedia('(min-width: 1080px)').matches) {
+                const descriptionCardHeight = descriptionCardRef.current!.clientHeight;
+                const tamanhoScroll = window.scrollY;
+
+                /* TODO:
+                 * Quando tiver disponivel no site a seção que o scroll deve parar, selecionar a seção e pegar o clientHeight para fazer a soma correta
+                 * e adicionar na variavel heightToStop, por enquanto coloquei um number fixo .
+                 */
+
+                const heightToStop = 1000;
+
+                let translateY = 0;
+
+                tamanhoScroll >= descriptionCardHeight && tamanhoScroll <= heightToStop
+                    ? (translateY = tamanhoScroll - descriptionCardHeight - descriptionCardHeight / 10)
+                    : (translateY = 0);
+
+                descriptionCardRef.current!.style.transform = `translateY(${translateY}px)`;
+            }
+        };
+
+        const debouncedAnim = debounce(() => window.requestAnimationFrame(handleScroll), 5);
+
+        window.addEventListener('scroll', debouncedAnim);
+
+        return () => window.removeEventListener('scroll', debouncedAnim);
+    }, []);
 
     return (
         <div
             data-testid="description-card"
-            className="min-w-[320px] max-w-[355px] md:min-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio flex flex-col gap-extraMedio items-center relative md:top-[-120px] lg:absolute lg:top-[-100px] right-[0] bg-white2 z-30"
+            className="min-w-[320px] max-w-[355px] md:min-w-[355px] h-[408px] border-solid border-2 border-[#d1d0d0] rounded p-medio flex flex-col gap-extraMedio items-center relative md:top-[-120px] lg:absolute lg:top-[-100px] right-[0] bg-white2 z-30 ease-out duration-200"
+            ref={descriptionCardRef}
         >
             <div
                 data-testid="description-card-logo"
