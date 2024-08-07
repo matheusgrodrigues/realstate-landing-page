@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import Description from '@/app/components/template/Description/Description';
 
 describe('Deve renderizar o template Description corretamente', () => {
+    // TODO: quando tiver buscando os dados via Providers, atualizar estes testes.
+
     beforeEach(() => render(<Description />));
 
     it('Deve renderizar o DescriptionLeftSide', () => {

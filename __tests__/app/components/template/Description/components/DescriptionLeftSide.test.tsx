@@ -3,6 +3,8 @@ import { render, screen } from '@testing-library/react';
 import DescriptionLeftSide from '@/app/components/template/Description/components/DescriptionLeftSide';
 
 describe('Deve renderizar o DescriptionLeftSide corretamente', () => {
+    // TODO: quando tiver buscando os dados via Providers, atualizar estes testes.
+
     beforeEach(() => render(<DescriptionLeftSide />));
 
     it('Deve renderizar o nome do empreendimento', () => {

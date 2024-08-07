@@ -2,6 +2,8 @@ import DescriptionRightSide from '@/app/components/template/Description/componen
 import { render, screen } from '@testing-library/react';
 
 describe('Deve renderizar o card de CTA corretamente', () => {
+    // TODO: quando tiver buscando os dados via Providers, atualizar estes testes.
+
     beforeEach(() => render(<DescriptionRightSide />));
 
     it('Deve renderizar a logo', () => {
