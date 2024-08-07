@@ -1,4 +1,4 @@
-import Description from './components/template/Description';
+import Description from './components/template/Description/Description';
 import Header from './components/template/Header';
 
 import MainGallery from './providers/gallery/main-gallery/MainGallery';
