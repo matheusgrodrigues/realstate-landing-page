@@ -8,4 +8,5 @@ body {
     background: white;
     overflow-x: hidden;
     color: black;
+    min-height: 900vh;
 }
