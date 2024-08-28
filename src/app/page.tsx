@@ -1,22 +1,13 @@
-import Description from './components/template/Description/Description';
-import Header from './components/template/Header';
-
-import MainGallery from './providers/gallery/main-gallery/MainGallery';
-import MainVideo from './providers/video/main-video/MainVideo';
-import MainMap from './providers/map/main-map/MainMap';
+import Heading from './components/atoms/Heading';
+import Menu from './components/organism/Menu';
 
 export default async function Home() {
     return (
         <>
-            <Header
-                providers={{
-                    gallery: <MainGallery />,
-                    video: <MainVideo />,
-                    mapa: <MainMap />,
-                }}
-            />
+            <Menu />
 
-            <Description />
+            {/* TODO: o menu está absolute e cobrindo o texto, ajustar e remover comentarios */}
+            <Heading config={{ variant: 'h4' }}>Home</Heading>
         </>
     );
 }
