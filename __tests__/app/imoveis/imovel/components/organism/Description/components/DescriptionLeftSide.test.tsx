@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import DescriptionLeftSide from '@/app/imoveis/[imovel]/components/template/Description/components/DescriptionLeftSide';
+import DescriptionLeftSide from '@/app/imoveis/[imovel]/components/organism/Description/components/DescriptionLeftSide';
 
 describe('Deve renderizar o DescriptionLeftSide corretamente', () => {
     // TODO: quando tiver buscando os dados via Providers, atualizar estes testes.

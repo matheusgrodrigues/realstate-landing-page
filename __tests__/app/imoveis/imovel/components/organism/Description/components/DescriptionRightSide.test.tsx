@@ -1,4 +1,4 @@
-import DescriptionRightSide from '@/app/imoveis/[imovel]/components/template/Description/components/DescriptionRightSide';
+import DescriptionRightSide from '@/app/imoveis/[imovel]/components/organism/Description/components/DescriptionRightSide';
 import { render, screen } from '@testing-library/react';
 
 describe('Deve renderizar o card de CTA corretamente', () => {

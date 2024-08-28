@@ -1,19 +1,19 @@
-import GalleryProvider from './providers/header/GalleryProvider';
-import VideoProvider from './providers/header/VideoProvider';
-import MapProvider from './providers/header/MapProvider';
-import Description from '@/app/imoveis/[imovel]/components/template/Description';
-import Header from '@/app/imoveis/[imovel]/components/template/Header';
+import GalleryVideoMap from './components/organism/GalleryVideoMap';
+import Description from '@/app/imoveis/[imovel]/components/organism/Description';
+import Menu from '@/app/components/organism/Menu';
 
-export default async function Home() {
+interface HomeProps {
+    params: { imovel: string };
+    searchParams: { [key: string]: string | string[] | undefined };
+}
+
+export default async function Home({ params }: HomeProps) {
     return (
         <>
-            <Header
-                providers={{
-                    gallery: <GalleryProvider />,
-                    video: <VideoProvider />,
-                    mapa: <MapProvider />,
-                }}
-            />
+            <header>
+                <Menu />
+                <GalleryVideoMap imovelName={params.imovel} />
+            </header>
 
             <Description />
         </>
