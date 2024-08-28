@@ -6,7 +6,6 @@ const GalleryService = {
     getGallery: async (endpoint: string, galleryName: string): Promise<GallerySchema[]> => {
         const res = await fetch(`${domain}${endpoint}${galleryName}`);
         const { data } = await res.json();
-
         return data;
     },
 };
