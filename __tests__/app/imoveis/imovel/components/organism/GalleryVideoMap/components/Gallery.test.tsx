@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Gallery from '@/app/imoveis/[imovel]/components/organism/Gallery';
+import Gallery from '@/app/imoveis/[imovel]/components/organism/GalleryVideoMap/components/Gallery';
 
 describe('Deve renderizar o organism Gallery', () => {
     beforeEach(() => {

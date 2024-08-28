@@ -1,5 +1,5 @@
 import GalleryService from '@/services/GalleryService';
-import Gallery from '../../../Gallery';
+import Gallery from '../../components/Gallery';
 
 interface GalleryProviderProps {
     imovelName: string;
