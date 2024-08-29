@@ -6,6 +6,6 @@ interface MapProviderPros {
 }
 
 export default async function MapProvider({ imovelName }: MapProviderPros) {
-    const map = await MapService.getMap(`/imoveis/${imovelName}/api/galleryVideoMap/`, 'map');
+    const map = await MapService.getMap(`/imoveis/${imovelName}/api/gallery-video-map/`, 'map');
     return <Map data-testid="atom-map" map={map ? map[0] : undefined} />;
 }

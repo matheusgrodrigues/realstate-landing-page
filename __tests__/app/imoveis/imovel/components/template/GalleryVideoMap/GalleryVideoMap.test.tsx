@@ -1,9 +1,9 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 
-import GalleryVideoMap from '@/app/imoveis/[imovel]/components/organism/GalleryVideoMap';
-import GalleryProvider from '@/app/imoveis/[imovel]/components/organism/GalleryVideoMap/providers/GalleryVideoMap/GalleryProvider';
-import VideoProvider from '@/app/imoveis/[imovel]/components/organism/GalleryVideoMap/providers/GalleryVideoMap/VideoProvider';
-import MapProvider from '@/app/imoveis/[imovel]/components/organism/GalleryVideoMap/providers/GalleryVideoMap/MapProvider';
+import GalleryVideoMap from '@/app/imoveis/[imovel]/components/template/GalleryVideoMap';
+import GalleryProvider from '@/app/imoveis/[imovel]/components/template/GalleryVideoMap/providers/GalleryVideoMap/GalleryProvider';
+import VideoProvider from '@/app/imoveis/[imovel]/components/template/GalleryVideoMap/providers/GalleryVideoMap/VideoProvider';
+import MapProvider from '@/app/imoveis/[imovel]/components/template/GalleryVideoMap/providers/GalleryVideoMap/MapProvider';
 
 describe('Dever renderizar o organism GalleryVideoMap', () => {
     global.fetch = jest.fn().mockResolvedValue({

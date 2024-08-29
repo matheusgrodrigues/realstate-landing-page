@@ -1,9 +1,9 @@
-import GalleryVideoMap from './components/organism/GalleryVideoMap';
+import GalleryVideoMap from './components/template/GalleryVideoMap';
 import Description from '@/app/imoveis/[imovel]/components/organism/Description';
 import Menu from '@/app/components/organism/Menu';
-import GalleryProvider from './components/organism/GalleryVideoMap/providers/GalleryVideoMap/GalleryProvider';
-import VideoProvider from './components/organism/GalleryVideoMap/providers/GalleryVideoMap/VideoProvider';
-import MapProvider from './components/organism/GalleryVideoMap/providers/GalleryVideoMap/MapProvider';
+import GalleryProvider from './providers/GalleryVideoMap/GalleryProvider';
+import VideoProvider from './providers/GalleryVideoMap/VideoProvider';
+import MapProvider from './providers/GalleryVideoMap/MapProvider';
 
 interface HomeProps {
     params: { imovel: string };
@@ -25,7 +25,9 @@ export default async function Home({ params }: HomeProps) {
                 />
             </header>
 
-            <Description />
+            <main>
+                <Description />
+            </main>
         </>
     );
 }

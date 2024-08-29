@@ -6,6 +6,6 @@ interface VideoProviderProps {
 }
 
 export default async function VideoProvider({ imovelName }: VideoProviderProps) {
-    const video = await VideoService.getVideo(`/imoveis/${imovelName}/api/galleryVideoMap/`, 'video');
+    const video = await VideoService.getVideo(`/imoveis/${imovelName}/api/gallery-video-map/`, 'video');
     return <Video data-testid="atom-video" video={video ? video[0] : undefined} />;
 }
